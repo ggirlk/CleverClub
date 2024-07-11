@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Generator</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<form id="generator-form" method="POST" action="">
+    {% csrf_token %}
+    <button type="button" id="generate">ask gemeni for music</button>
+    <h5>result</h5>
+    <p id="result"></p>
+</form>
+<select id="instruments" onchange="selectInstruments(this)"></select>
+
+<button id="playtones"> play </button>
+
+<h1>Audio Recorder</h1>
+    <select id="audioSource">
+        <option value="microphone">Microphone</option>
+        <option value="system">System Audio (if supported)</option>
+    </select>
+    <button id="startBtn">Start Recording</button>
+    <button id="stopBtn" disabled>Stop Recording</button>
+    <audio id="audioPlayback" controls></audio>
+
+    <script src="app.js"></script>
+
+
+
+<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script> 
+<script>
+
+/* VARIABLES & CONSTANTS */
+var vData = [];
+var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+var audioContext = new AudioContextFunc();
+var player = new WebAudioFontPlayer();
+
+var sel = document.getElementById('instruments');
+for(var i = 0; i < player.loader.instrumentKeys().length; i++) {
+	var opt = document.createElement('option');
+	opt.innerHTML = ''+(i+1)+'. '+player.loader.instrumentInfo(i).title;
+	if (i == 0) {
+		opt.selected = 'selected'
+	}
+	sel.appendChild(opt);
+}
+var InstrNbr = 0
+var info = player.loader.instrumentInfo(InstrNbr)
+//var strtone = '_tone_0090_JCLive_sf2_file'
+var strtone = info.variable;
+player.loader.startLoad(audioContext, info.url, info.variable);
+
+
+function selectInstruments(selected) {
+	InstrNbr = selected.selectedIndex;
+	info = player.loader.instrumentInfo(InstrNbr)
+	console.log('selectInstruments', InstrNbr, info);
+	player.loader.startLoad(audioContext, info.url, info.variable);
+	player.loader.waitLoad(function () {
+		console.log('done',info.variable);
+		strtone = info.variable;
+		//player.cancelQueue(audioContext);
+		//started=false;
+		//start();
+	});
+}
+
+/* FUNCTIONS */
+player.loader.decodeAfterLoading(audioContext, strtone);
+
+function playKey(pitch, strtone, time=1) {
+	player.queueWaveTable(audioContext, audioContext.destination, eval(strtone), 0, pitch, time);
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+var gemResp = [
+  {"tone": "C4", "duration": 250, "pitch": 60},
+  {"tone": "E4", "duration": 250, "pitch": 64},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "C4", "duration": 250, "pitch": 60},
+  {"tone": "E4", "duration": 250, "pitch": 64},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "C4", "duration": 250, "pitch": 60},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "C4", "duration": 250, "pitch": 60},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+  {"tone": "C5", "duration": 250, "pitch": 72},
+  {"tone": "E5", "duration": 250, "pitch": 76},
+  {"tone": "G5", "duration": 250, "pitch": 79},
+  {"tone": "G4", "duration": 250, "pitch": 67},
+]
+
+gemResp = [ { "tone": "E2", "duration": 250, "pitch": 65 }, { "tone": "A2", "duration": 250, "pitch": 82 }, { "tone": "E3", "duration": 250, "pitch": 164 }, { "tone": "B2", "duration": 250, "pitch": 123 }, { "tone": "E3", "duration": 250, "pitch": 164 }, { "tone": "A3", "duration": 250, "pitch": 220 }, { "tone": "E4", "duration": 500, "pitch": 329 }, { "tone": "E3", "duration": 250, "pitch": 164 }, { "tone": "A3", "duration": 250, "pitch": 220 }, { "tone": "E4", "duration": 250, "pitch": 329 }, { "tone": "B3", "duration": 250, "pitch": 246 }, { "tone": "E4", "duration": 250, "pitch": 329 }, { "tone": "A4", "duration": 250, "pitch": 440 }, { "tone": "E5", "duration": 500, "pitch": 659 }, { "tone": "E4", "duration": 250, "pitch": 329 }, { "tone": "A4", "duration": 250, "pitch": 440 }, { "tone": "E5", "duration": 250, "pitch": 659 }, { "tone": "B4", "duration": 250, "pitch": 493 }, { "tone": "E5", "duration": 250, "pitch": 659 }, { "tone": "A5", "duration": 250, "pitch": 880 }, { "tone": "E6", "duration": 500, "pitch": 1318 }, { "tone": "E5", "duration": 250, "pitch": 659 }, { "tone": "A5", "duration": 250, "pitch": 880 }, { "tone": "E6", "duration": 250, "pitch": 1318 }, { "tone": "B5", "duration": 250, "pitch": 987 }, { "tone": "E6", "duration": 250, "pitch": 1318 }, { "tone": "A6", "duration": 250, "pitch": 1760 }, { "tone": "E7", "duration": 500, "pitch": 2637 }, { "tone": "E6", "duration": 250, "pitch": 1318 }, { "tone": "A6", "duration": 250, "pitch": 1760 }, { "tone": "E7", "duration": 250, "pitch": 2637 }, { "tone": "B6", "duration": 250, "pitch": 1975 }, { "tone": "E7", "duration": 250, "pitch": 2637 }, { "tone": "A7", "duration": 250, "pitch": 3520 }, { "tone": "E8", "duration": 500, "pitch": 5274 }, { "tone": "E7", "duration": 250, "pitch": 2637 }, { "tone": "A7", "duration": 250, "pitch": 3520 }, { "tone": "E8", "duration": 250, "pitch": 5274 }, { "tone": "B7", "duration": 250, "pitch": 3951 }, { "tone": "E8", "duration": 250, "pitch": 5274 }, { "tone": "A8", "duration": 250, "pitch": 7040 }, { "tone": "E9", "duration": 500, "pitch": 10568 }, { "tone": "E8", "duration": 250, "pitch": 5274 }, { "tone": "A8", "duration": 250, "pitch": 7040 }, { "tone": "E9", "duration": 250, "pitch": 10568 }, { "tone": "B8", "duration": 250, "pitch": 7902 }, { "tone": "E9", "duration": 250, "pitch": 10568 }, { "tone": "A9", "duration": 250, "pitch": 14080 }, { "tone": "E10", "duration": 500, "pitch": 21136 }, { "tone": "E9", "duration": 250, "pitch": 10568 }, { "tone": "A9", "duration": 250, "pitch": 14080 }, { "tone": "E10", "duration": 250, "pitch": 21136 }, { "tone": "B9", "duration": 250, "pitch": 15804 }, { "tone": "E10", "duration": 250, "pitch": 21136 }, { "tone": "A10", "duration": 250, "pitch": 28160 }, { "tone": "E11", "duration": 500, "pitch": 42240 } ]
+
+gemResp = [ {"tone": "A2", "duration": 250, "pitch": 70}, {"tone": "E2", "duration": 250, "pitch": 60}, {"tone": "D2", "duration": 250, "pitch": 50}, {"tone": "C2", "duration": 250, "pitch": 40}, {"tone": "A2", "duration": 500, "pitch": 75}, {"tone": "E2", "duration": 500, "pitch": 65}, {"tone": "D2", "duration": 500, "pitch": 55}, {"tone": "C2", "duration": 500, "pitch": 45}, {"tone": "A3", "duration": 250, "pitch": 90}, {"tone": "E3", "duration": 250, "pitch": 80}, {"tone": "D3", "duration": 250, "pitch": 70}, {"tone": "C3", "duration": 250, "pitch": 60}, {"tone": "A3", "duration": 500, "pitch": 95}, {"tone": "E3", "duration": 500, "pitch": 85}, {"tone": "D3", "duration": 500, "pitch": 75}, {"tone": "C3", "duration": 500, "pitch": 65}, {"tone": "A4", "duration": 250, "pitch": 95}, {"tone": "E4", "duration": 250, "pitch": 85}, {"tone": "D4", "duration": 250, "pitch": 75}, {"tone": "C4", "duration": 250, "pitch": 65}, {"tone": "A4", "duration": 500, "pitch": 90}, {"tone": "E4", "duration": 500, "pitch": 80}, {"tone": "D4", "duration": 500, "pitch": 70}, {"tone": "C4", "duration": 500, "pitch": 60}, {"tone": "A5", "duration": 250, "pitch": 80}, {"tone": "E5", "duration": 250, "pitch": 70}, {"tone": "D5", "duration": 250, "pitch": 60}, {"tone": "C5", "duration": 250, "pitch": 50}, {"tone": "A5", "duration": 500, "pitch": 85}, {"tone": "E5", "duration": 500, "pitch": 75}, {"tone": "D5", "duration": 500, "pitch": 65}, {"tone": "C5", "duration": 500, "pitch": 55}, {"tone": "A6", "duration": 250, "pitch": 70}, {"tone": "E6", "duration": 250, "pitch": 60}, {"tone": "D6", "duration": 250, "pitch": 50}, {"tone": "C6", "duration": 250, "pitch": 40}, {"tone": "A6", "duration": 500, "pitch": 75}, {"tone": "E6", "duration": 500, "pitch": 65}, {"tone": "D6", "duration": 500, "pitch": 55}, {"tone": "C6", "duration": 500, "pitch": 45}, {"tone": "A7", "duration": 250, "pitch": 90}, {"tone": "E7", "duration": 250, "pitch": 80}, {"tone": "D7", "duration": 250, "pitch": 70}, {"tone": "C7", "duration": 250, "pitch": 60}, {"tone": "A7", "duration": 500, "pitch": 95}, {"tone": "E7", "duration": 500, "pitch": 85}, {"tone": "D7", "duration": 500, "pitch": 75}, {"tone": "C7", "duration": 500, "pitch": 65}, {"tone": "A8", "duration": 250, "pitch": 95}, {"tone": "E8", "duration": 250, "pitch": 85}, {"tone": "D8", "duration": 250, "pitch": 75}, {"tone": "C8", "duration": 250, "pitch": 65}, {"tone": "A8", "duration": 500, "pitch": 90}, {"tone": "E8", "duration": 500, "pitch": 80}, {"tone": "D8", "duration": 500, "pitch": 70}, {"tone": "C8", "duration": 500, "pitch": 60}, {"tone": "A9", "duration": 250, "pitch": 80}, {"tone": "E9", "duration": 250, "pitch": 70}, {"tone": "D9", "duration": 250, "pitch": 60}, {"tone": "C9", "duration": 250, "pitch": 50}, {"tone": "A9", "duration": 500, "pitch": 85}, {"tone": "E9", "duration": 500, "pitch": 75}, {"tone": "D9", "duration": 500, "pitch": 65}, {"tone": "C9", "duration": 500, "pitch": 55}, {"tone": "A10", "duration": 250, "pitch": 70}, {"tone": "E10", "duration": 250, "pitch": 60}, {"tone": "D10", "duration": 250, "pitch": 50}, {"tone": "C10", "duration": 250, "pitch": 40}, {"tone": "A10", "duration": 500, "pitch": 75}, {"tone": "E10", "duration": 500, "pitch": 65}, {"tone": "D10", "duration": 500, "pitch": 55}, {"tone": "C10", "duration": 500, "pitch": 45} ]
+
+gemResp = [ {"tone": "A2", "duration": 250, "pitch": 50}, {"tone": "E2", "duration": 250, "pitch": 70}, {"tone": "D2", "duration": 250, "pitch": 60}, {"tone": "C2", "duration": 250, "pitch": 50}, {"tone": "A2", "duration": 125, "pitch": 40}, {"tone": "E2", "duration": 125, "pitch": 60}, {"tone": "D2", "duration": 250, "pitch": 50}, {"tone": "C2", "duration": 250, "pitch": 40}, {"tone": "A2", "duration": 250, "pitch": 30}, {"tone": "E2", "duration": 250, "pitch": 50}, {"tone": "D2", "duration": 250, "pitch": 40}, {"tone": "C2", "duration": 250, "pitch": 30}, {"tone": "A3", "duration": 125, "pitch": 80}, {"tone": "E3", "duration": 125, "pitch": 90}, {"tone": "D3", "duration": 250, "pitch": 80}, {"tone": "C3", "duration": 250, "pitch": 70}, {"tone": "A3", "duration": 250, "pitch": 60}, {"tone": "E3", "duration": 250, "pitch": 70}, {"tone": "D3", "duration": 250, "pitch": 60}, {"tone": "C3", "duration": 250, "pitch": 50}, {"tone": "A4", "duration": 125, "pitch": 90}, {"tone": "E4", "duration": 125, "pitch": 100}, {"tone": "D4", "duration": 250, "pitch": 90}, {"tone": "C4", "duration": 250, "pitch": 80}, {"tone": "A4", "duration": 250, "pitch": 70}, {"tone": "E4", "duration": 250, "pitch": 80}, {"tone": "D4", "duration": 250, "pitch": 70}, {"tone": "C4", "duration": 250, "pitch": 60}, {"tone": "A4", "duration": 250, "pitch": 50}, {"tone": "E4", "duration": 250, "pitch": 60}, {"tone": "D4", "duration": 250, "pitch": 50}, {"tone": "C4", "duration": 250, "pitch": 40}, {"tone": "A5", "duration": 125, "pitch": 90}, {"tone": "E5", "duration": 125, "pitch": 100}, {"tone": "D5", "duration": 250, "pitch": 90}, {"tone": "C5", "duration": 250, "pitch": 80}, {"tone": "A5", "duration": 250, "pitch": 70}, {"tone": "E5", "duration": 250, "pitch": 80}, {"tone": "D5", "duration": 250, "pitch": 70}, {"tone": "C5", "duration": 250, "pitch": 60}, {"tone": "A5", "duration": 250, "pitch": 50}, {"tone": "E5", "duration": 250, "pitch": 60}, {"tone": "D5", "duration": 250, "pitch": 50}, {"tone": "C5", "duration": 250, "pitch": 40}, {"tone": "A6", "duration": 125, "pitch": 90}, {"tone": "E6", "duration": 125, "pitch": 100}, {"tone": "D6", "duration": 250, "pitch": 90}, {"tone": "C6", "duration": 250, "pitch": 80}, {"tone": "A6", "duration": 250, "pitch": 70}, {"tone": "E6", "duration": 250, "pitch": 80}, {"tone": "D6", "duration": 250, "pitch": 70}, {"tone": "C6", "duration": 250, "pitch": 60}, {"tone": "A6", "duration": 250, "pitch": 50}, {"tone": "E6", "duration": 250, "pitch": 60}, {"tone": "D6", "duration": 250, "pitch": 50}, {"tone": "C6", "duration": 250, "pitch": 40} ]
+
+gemResp = [ { "tone": "E2", "duration": 200, "pitch": 50 }, { "tone": "G2", "duration": 100, "pitch": 70 }, { "tone": "B2", "duration": 150, "pitch": 90 }, { "tone": "E3", "duration": 250, "pitch": 60 }, { "tone": "D3", "duration": 100, "pitch": 40 }, { "tone": "C3", "duration": 150, "pitch": 30 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 }, { "tone": "E2", "duration": 200, "pitch": 30 }, { "tone": "G2", "duration": 100, "pitch": 50 }, { "tone": "B2", "duration": 150, "pitch": 70 }, { "tone": "E3", "duration": 250, "pitch": 90 }, { "tone": "D3", "duration": 100, "pitch": 60 }, { "tone": "C3", "duration": 150, "pitch": 40 }, { "tone": "A2", "duration": 200, "pitch": 20 }, { "tone": "G2", "duration": 100, "pitch": 10 } ]
+
+gemResp = [ {"tone": "C4", "duration": 250, "pitch": 30}, {"tone": "D4", "duration": 125, "pitch": 35}, {"tone": "E4", "duration": 125, "pitch": 40}, {"tone": "F4", "duration": 250, "pitch": 45}, {"tone": "G4", "duration": 125, "pitch": 50}, {"tone": "A4", "duration": 125, "pitch": 45}, {"tone": "B4", "duration": 250, "pitch": 40}, {"tone": "C5", "duration": 125, "pitch": 35}, {"tone": "D5", "duration": 125, "pitch": 30}, {"tone": "E5", "duration": 250, "pitch": 25}, {"tone": "F5", "duration": 125, "pitch": 20}, {"tone": "G5", "duration": 125, "pitch": 15}, {"tone": "A5", "duration": 250, "pitch": 10}, {"tone": "B5", "duration": 125, "pitch": 5}, {"tone": "C6", "duration": 125, "pitch": 10}, {"tone": "D6", "duration": 250, "pitch": 15}, {"tone": "E6", "duration": 125, "pitch": 20}, {"tone": "F6", "duration": 125, "pitch": 25}, {"tone": "G6", "duration": 250, "pitch": 30}, {"tone": "A6", "duration": 125, "pitch": 35}, {"tone": "B6", "duration": 125, "pitch": 40}, {"tone": "C7", "duration": 250, "pitch": 45}, {"tone": "D7", "duration": 125, "pitch": 50}, {"tone": "E7", "duration": 125, "pitch": 45}, {"tone": "F7", "duration": 250, "pitch": 40}, {"tone": "G7", "duration": 125, "pitch": 35}, {"tone": "A7", "duration": 125, "pitch": 30}, {"tone": "B7", "duration": 250, "pitch": 25}, {"tone": "C8", "duration": 125, "pitch": 20}, {"tone": "D8", "duration": 125, "pitch": 15}, {"tone": "E8", "duration": 250, "pitch": 10}, {"tone": "F8", "duration": 125, "pitch": 5}, {"tone": "G8", "duration": 125, "pitch": 10}, {"tone": "A8", "duration": 250, "pitch": 15}, {"tone": "B8", "duration": 125, "pitch": 20}, {"tone": "C9", "duration": 125, "pitch": 25}, {"tone": "D9", "duration": 250, "pitch": 30}, {"tone": "E9", "duration": 125, "pitch": 35}, {"tone": "F9", "duration": 125, "pitch": 40}, {"tone": "G9", "duration": 250, "pitch": 45}, {"tone": "A9", "duration": 125, "pitch": 50}, {"tone": "B9", "duration": 125, "pitch": 45}, {"tone": "C10", "duration": 250, "pitch": 40}, {"tone": "D10", "duration": 125, "pitch": 35}, {"tone": "E10", "duration": 125, "pitch": 30}, {"tone": "F10", "duration": 250, "pitch": 25}, {"tone": "G10", "duration": 125, "pitch": 20}, {"tone": "A10", "duration": 125, "pitch": 15}, {"tone": "B10", "duration": 250, "pitch": 10}, {"tone": "C11", "duration": 125, "pitch": 5}, {"tone": "D11", "duration": 125, "pitch": 10}, {"tone": "E11", "duration": 250, "pitch": 15}, {"tone": "F11", "duration": 125, "pitch": 20}, {"tone": "G11", "duration": 125, "pitch": 25}, {"tone": "A11", "duration": 250, "pitch": 30}, {"tone": "B11", "duration": 125, "pitch": 35}, {"tone": "C12", "duration": 125, "pitch": 40} ]
+
+gemResp = [ {"tone": "C#4", "duration": 100, "pitch": 35}, {"tone": "G#4", "duration": 200, "pitch": 42}, {"tone": "D#5", "duration": 100, "pitch": 49}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "D#5", "duration": 200, "pitch": 49}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "F#4", "duration": 100, "pitch": 40}, {"tone": "D#4", "duration": 100, "pitch": 37}, {"tone": "C#4", "duration": 100, "pitch": 35}, {"tone": "G#4", "duration": 200, "pitch": 42}, {"tone": "D#5", "duration": 100, "pitch": 49}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "D#5", "duration": 200, "pitch": 49}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "F#4", "duration": 100, "pitch": 40}, {"tone": "D#4", "duration": 100, "pitch": 37}, {"tone": "C#4", "duration": 100, "pitch": 35}, {"tone": "G#4", "duration": 200, "pitch": 42}, {"tone": "D#5", "duration": 100, "pitch": 49}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "D#5", "duration": 200, "pitch": 49}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "F#4", "duration": 100, "pitch": 40}, {"tone": "D#4", "duration": 100, "pitch": 37}, {"tone": "C#4", "duration": 100, "pitch": 35}, {"tone": "G#4", "duration": 200, "pitch": 42}, {"tone": "D#5", "duration": 100, "pitch": 49}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "D#5", "duration": 200, "pitch": 49}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "F#4", "duration": 100, "pitch": 40}, {"tone": "D#4", "duration": 100, "pitch": 37}, {"tone": "C#4", "duration": 100, "pitch": 35}, {"tone": "G#4", "duration": 200, "pitch": 42}, {"tone": "D#5", "duration": 100, "pitch": 49}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "D#5", "duration": 200, "pitch": 49}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "F#4", "duration": 100, "pitch": 40}, {"tone": "D#4", "duration": 100, "pitch": 37}, {"tone": "C#4", "duration": 100, "pitch": 35}, {"tone": "G#4", "duration": 200, "pitch": 42}, {"tone": "D#5", "duration": 100, "pitch": 49}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "C#5", "duration": 100, "pitch": 51}, {"tone": "D#5", "duration": 200, "pitch": 49}, {"tone": "A#4", "duration": 200, "pitch": 46}, {"tone": "F#4", "duration": 100, "pitch": 40}, {"tone": "D#4", "duration": 100, "pitch": 37}, {"tone": "C#4", "duration": 100, "pitch": 35} ]
+
+gemResp = [ { "tone": "C4", "duration": 250, "pitch": 24 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "C5", "duration": 250, "pitch": 48 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "C4", "duration": 250, "pitch": 24 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "A4", "duration": 250, "pitch": 41 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "F4", "duration": 250, "pitch": 36 }, { "tone": "E4", "duration": 250, "pitch": 33 }, { "tone": "D4", "duration": 250, "pitch": 29 }, { "tone": "C4", "duration": 250, "pitch": 24 }, { "tone": "G4", "duration": 500, "pitch": 39 }, { "tone": "A4", "duration": 250, "pitch": 41 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "C4", "duration": 250, "pitch": 24 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "C5", "duration": 250, "pitch": 48 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "C4", "duration": 250, "pitch": 24 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "A4", "duration": 250, "pitch": 41 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "F4", "duration": 250, "pitch": 36 }, { "tone": "E4", "duration": 250, "pitch": 33 }, { "tone": "D4", "duration": 250, "pitch": 29 }, { "tone": "C4", "duration": 250, "pitch": 24 }, { "tone": "G4", "duration": 500, "pitch": 39 }, { "tone": "A4", "duration": 250, "pitch": 41 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "C4", "duration": 250, "pitch": 24 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "C5", "duration": 250, "pitch": 48 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "C4", "duration": 250, "pitch": 24 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "A4", "duration": 250, "pitch": 41 }, { "tone": "G4", "duration": 250, "pitch": 39 }, { "tone": "F4", "duration": 250, "pitch": 36 }, { "tone": "E4", "duration": 250, "pitch": 33 }, { "tone": "D4", "duration": 250, "pitch": 29 }, { "tone": "C4", "duration": 250, "pitch": 24 } ]
+
+//rock
+gemResp = [ { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "E", "duration": 250, "pitch": 49 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "E", "duration": 250, "pitch": 49 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "E", "duration": 250, "pitch": 49 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "E", "duration": 250, "pitch": 49 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "E", "duration": 250, "pitch": 49 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 }, { "tone": "E", "duration": 250, "pitch": 49 }, { "tone": "G", "duration": 250, "pitch": 55 }, { "tone": "D", "duration": 250, "pitch": 47 }, { "tone": "C", "duration": 250, "pitch": 40 } ]
+
+// drum rythm
+gemResp = [ { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 500, "pitch": 20 }, { "tone": "G4", "duration": 500, "pitch": 40 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 500, "pitch": 20 }, { "tone": "G4", "duration": 500, "pitch": 40 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 500, "pitch": 20 }, { "tone": "G4", "duration": 500, "pitch": 40 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 500, "pitch": 20 }, { "tone": "G4", "duration": 500, "pitch": 40 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 500, "pitch": 20 }, { "tone": "G4", "duration": 500, "pitch": 40 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 250, "pitch": 20 }, { "tone": "E4", "duration": 250, "pitch": 30 }, { "tone": "G4", "duration": 250, "pitch": 40 }, { "tone": "C5", "duration": 250, "pitch": 50 }, { "tone": "C4", "duration": 500, "pitch": 20 }, { "tone": "G4", "duration": 500, "pitch": 40 } ]
+
+// eastern darbouka
+// [ { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "A", "duration": 250, "pitch": 41 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "G", "duration": 250, "pitch": 39 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "F", "duration": 250, "pitch": 38 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "E", "duration": 250, "pitch": 37 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 }, { "tone": "D", "duration": 250, "pitch": 35 } ]
+
+$("#generate").on('click', function() {
+
+    $.getJSON({
+	    url: "{% url 'generate.music' %}",
+	    success: function ( data ) {
+            gemResp = data
+            console.log(data)
+            $("#result").html(gemResp)
+            // should save to database
+        }
+    })
+})
+// slow
+//gemResp = [ { "tone": "C", "duration": 1000, "pitch": 30 }, { "tone": "D", "duration": 1000, "pitch": 32 }, { "tone": "E", "duration": 1000, "pitch": 34 }, { "tone": "F", "duration": 1000, "pitch": 36 }, { "tone": "G", "duration": 1000, "pitch": 38 }, { "tone": "A", "duration": 1000, "pitch": 40 }, { "tone": "B", "duration": 1000, "pitch": 42 }, { "tone": "C", "duration": 1000, "pitch": 44 }, { "tone": "D", "duration": 1000, "pitch": 46 }, { "tone": "E", "duration": 1000, "pitch": 48 }, { "tone": "F", "duration": 1000, "pitch": 50 }, { "tone": "G", "duration": 1000, "pitch": 52 }, { "tone": "A", "duration": 1000, "pitch": 54 }, { "tone": "B", "duration": 1000, "pitch": 56 }, { "tone": "C", "duration": 1000, "pitch": 58 }, { "tone": "D", "duration": 1000, "pitch": 60 }, { "tone": "E", "duration": 1000, "pitch": 58 }, { "tone": "F", "duration": 1000, "pitch": 56 }, { "tone": "G", "duration": 1000, "pitch": 54 }, { "tone": "A", "duration": 1000, "pitch": 52 }, { "tone": "B", "duration": 1000, "pitch": 50 }, { "tone": "C", "duration": 1000, "pitch": 48 }, { "tone": "D", "duration": 1000, "pitch": 46 }, { "tone": "E", "duration": 1000, "pitch": 44 }, { "tone": "F", "duration": 1000, "pitch": 42 }, { "tone": "G", "duration": 1000, "pitch": 40 }, { "tone": "A", "duration": 1000, "pitch": 38 }, { "tone": "B", "duration": 1000, "pitch": 36 }, { "tone": "C", "duration": 1000, "pitch": 34 }, { "tone": "D", "duration": 1000, "pitch": 32 }, { "tone": "E", "duration": 1000, "pitch": 30 }, { "tone": "F", "duration": 1000, "pitch": 28 }, { "tone": "G", "duration": 1000, "pitch": 26 }, { "tone": "A", "duration": 1000, "pitch": 24 }, { "tone": "B", "duration": 1000, "pitch": 22 }, { "tone": "C", "duration": 1000, "pitch": 20 }, { "tone": "D", "duration": 1000, "pitch": 18 }, { "tone": "E", "duration": 1000, "pitch": 16 }, { "tone": "F", "duration": 1000, "pitch": 14 }, { "tone": "G", "duration": 1000, "pitch": 12 }, { "tone": "A", "duration": 1000, "pitch": 10 }, { "tone": "B", "duration": 1000, "pitch": 8 }, { "tone": "C", "duration": 1000, "pitch": 6 }, { "tone": "D", "duration": 1000, "pitch": 4 }, { "tone": "E", "duration": 1000, "pitch": 2 } ]
+//[ { "tone": "C4", "duration": 1000, "pitch": 24 }, { "tone": "D4", "duration": 1000, "pitch": 26 }, { "tone": "E4", "duration": 1000, "pitch": 28 }, { "tone": "F4", "duration": 1000, "pitch": 29 }, { "tone": "G4", "duration": 1000, "pitch": 31 }, { "tone": "A4", "duration": 1000, "pitch": 33 }, { "tone": "B4", "duration": 1000, "pitch": 35 }, { "tone": "C5", "duration": 1000, "pitch": 36 }, { "tone": "C4", "duration": 1000, "pitch": 24 }, { "tone": "D4", "duration": 1000, "pitch": 26 }, { "tone": "E4", "duration": 1000, "pitch": 28 }, { "tone": "F4", "duration": 1000, "pitch": 29 }, { "tone": "G4", "duration": 1000, "pitch": 31 }, { "tone": "A4", "duration": 1000, "pitch": 33 }, { "tone": "B4", "duration": 1000, "pitch": 35 }, { "tone": "C5", "duration": 1000, "pitch": 36 }, { "tone": "C4", "duration": 1000, "pitch": 24 }, { "tone": "D4", "duration": 1000, "pitch": 26 }, { "tone": "E4", "duration": 1000, "pitch": 28 }, { "tone": "F4", "duration": 1000, "pitch": 29 }, { "tone": "G4", "duration": 1000, "pitch": 31 }, { "tone": "A4", "duration": 1000, "pitch": 33 }, { "tone": "B4", "duration": 1000, "pitch": 35 }, { "tone": "C5", "duration": 1000, "pitch": 36 }, { "tone": "C4", "duration": 1000, "pitch": 24 }, { "tone": "D4", "duration": 1000, "pitch": 26 }, { "tone": "E4", "duration": 1000, "pitch": 28 }, { "tone": "F4", "duration": 1000, "pitch": 29 }, { "tone": "G4", "duration": 1000, "pitch": 31 }, { "tone": "A4", "duration": 1000, "pitch": 33 }, { "tone": "B4", "duration": 1000, "pitch": 35 }, { "tone": "C5", "duration": 1000, "pitch": 36 }, { "tone": "C4", "duration": 1000, "pitch": 24 }, { "tone": "D4", "duration": 1000, "pitch": 26 }, { "tone": "E4", "duration": 1000, "pitch": 28 }, { "tone": "F4", "duration": 1000, "pitch": 29 }, { "tone": "G4", "duration": 1000, "pitch": 31 }, { "tone": "A4", "duration": 1000, "pitch": 33 }, { "tone": "B4", "duration": 1000, "pitch": 35 }, { "tone": "C5", "duration": 1000, "pitch": 36 }, { "tone": "C4", "duration": 1000, "pitch": 24 }, { "tone": "D4", "duration": 1000, "pitch": 26 }, { "tone": "E4", "duration": 1000, "pitch": 28 }, { "tone": "F4", "duration": 1000, "pitch": 29 }, { "tone": "G4", "duration": 1000, "pitch": 31 }, { "tone": "A4", "duration": 1000, "pitch": 33 }, { "tone": "B4", "duration": 1000, "pitch": 35 }, { "tone": "C5", "duration": 1000, "pitch": 36 } ]
+// [ {"tone": "C4", "duration": 250, "pitch": 36}, {"tone": "D4", "duration": 250, "pitch": 38}, {"tone": "E4", "duration": 250, "pitch": 40}, {"tone": "F4", "duration": 250, "pitch": 41}, {"tone": "G4", "duration": 250, "pitch": 43}, {"tone": "A4", "duration": 250, "pitch": 45}, {"tone": "B4", "duration": 250, "pitch": 47}, {"tone": "C5", "duration": 250, "pitch": 48}, {"tone": "C4", "duration": 250, "pitch": 36}, {"tone": "D4", "duration": 250, "pitch": 38}, {"tone": "E4", "duration": 250, "pitch": 40}, {"tone": "F4", "duration": 250, "pitch": 41}, {"tone": "G4", "duration": 250, "pitch": 43}, {"tone": "A4", "duration": 250, "pitch": 45}, {"tone": "B4", "duration": 250, "pitch": 47}, {"tone": "C5", "duration": 250, "pitch": 48}, {"tone": "C4", "duration": 250, "pitch": 36}, {"tone": "D4", "duration": 250, "pitch": 38}, {"tone": "E4", "duration": 250, "pitch": 40}, {"tone": "F4", "duration": 250, "pitch": 41}, {"tone": "G4", "duration": 250, "pitch": 43}, {"tone": "A4", "duration": 250, "pitch": 45}, {"tone": "B4", "duration": 250, "pitch": 47}, {"tone": "C5", "duration": 250, "pitch": 48}, {"tone": "C4", "duration": 250, "pitch": 36}, {"tone": "D4", "duration": 250, "pitch": 38}, {"tone": "E4", "duration": 250, "pitch": 40}, {"tone": "F4", "duration": 250, "pitch": 41}, {"tone": "G4", "duration": 250, "pitch": 43}, {"tone": "A4", "duration": 250, "pitch": 45}, {"tone": "B4", "duration": 250, "pitch": 47}, {"tone": "C5", "duration": 250, "pitch": 48}, {"tone": "C4", "duration": 250, "pitch": 36}, {"tone": "D4", "duration": 250, "pitch": 38}, {"tone": "E4", "duration": 250, "pitch": 40}, {"tone": "F4", "duration": 250, "pitch": 41}, {"tone": "G4", "duration": 250, "pitch": 43}, {"tone": "A4", "duration": 250, "pitch": 45}, {"tone": "B4", "duration": 250, "pitch": 47}, {"tone": "C5", "duration": 250, "pitch": 48} ]
+
+// funk
+// [ { "tone": "C4", "duration": 250, "pitch": 36 }, { "tone": "D4", "duration": 250, "pitch": 38 }, { "tone": "E4", "duration": 250, "pitch": 40 }, { "tone": "F4", "duration": 250, "pitch": 41 }, { "tone": "G4", "duration": 250, "pitch": 43 }, { "tone": "A4", "duration": 250, "pitch": 45 }, { "tone": "B4", "duration": 250, "pitch": 47 }, { "tone": "C5", "duration": 250, "pitch": 48 }, { "tone": "C4", "duration": 125, "pitch": 36 }, { "tone": "E4", "duration": 125, "pitch": 40 }, { "tone": "G4", "duration": 125, "pitch": 43 }, { "tone": "B4", "duration": 125, "pitch": 47 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "D5", "duration": 125, "pitch": 50 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "F5", "duration": 125, "pitch": 53 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "A5", "duration": 125, "pitch": 57 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "C6", "duration": 125, "pitch": 60 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "A5", "duration": 125, "pitch": 57 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "F5", "duration": 125, "pitch": 53 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "D5", "duration": 125, "pitch": 50 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "B4", "duration": 125, "pitch": 47 }, { "tone": "G4", "duration": 125, "pitch": 43 }, { "tone": "E4", "duration": 125, "pitch": 40 }, { "tone": "C4", "duration": 125, "pitch": 36 }, { "tone": "F4", "duration": 125, "pitch": 41 }, { "tone": "A4", "duration": 125, "pitch": 45 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "C6", "duration": 125, "pitch": 60 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "A5", "duration": 125, "pitch": 57 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "F5", "duration": 125, "pitch": 53 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "D5", "duration": 125, "pitch": 50 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "B4", "duration": 125, "pitch": 47 }, { "tone": "G4", "duration": 125, "pitch": 43 }, { "tone": "E4", "duration": 125, "pitch": 40 }, { "tone": "C4", "duration": 125, "pitch": 36 }, { "tone": "F4", "duration": 125, "pitch": 41 }, { "tone": "A4", "duration": 125, "pitch": 45 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "C6", "duration": 125, "pitch": 60 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "A5", "duration": 125, "pitch": 57 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "F5", "duration": 125, "pitch": 53 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "D5", "duration": 125, "pitch": 50 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "B4", "duration": 125, "pitch": 47 }, { "tone": "G4", "duration": 125, "pitch": 43 }, { "tone": "E4", "duration": 125, "pitch": 40 }, { "tone": "C4", "duration": 125, "pitch": 36 } ]
+
+var full 
+
+instrumentFiles = {
+    "Electric Guitar": {variable: '_tone_0270_Chaos_sf2_file', url: 'https://surikov.github.io/webaudiofontdata/sound/0270_Chaos_sf2_file.js', title: 'Electric Guitar (clean): Guitar', pitch: -1},
+    "Drums": {"variable": "_tone_1160_Chaos_sf2_file","url": "https://surikov.github.io/webaudiofontdata/sound/1160_Chaos_sf2_file.js","title": "Taiko Drum: Percussive","pitch": -1},
+    "Bass": {"variable": "_tone_0330_Chaos_sf2_file", "url": "https://surikov.github.io/webaudiofontdata/sound/0330_Chaos_sf2_file.js", "title": "Electric Bass (finger): Bass", "pitch": -1},
+}
+
+console.log(instrumentFiles["Electric Guitar"])
+
+var instrumentTones = {
+    "Electric Guitar": 1,
+    "Drums": 2,
+    "Bass": 3,
+}
+
+player.loader.startLoad(audioContext, instrumentFiles["Electric Guitar"].url, instrumentFiles["Electric Guitar"].variable);
+player.loader.waitLoad(function () {
+    console.log('done',instrumentFiles["Electric Guitar"].variable);
+    instrumentTones["Electric Guitar"] = instrumentFiles["Electric Guitar"].variable;
+    //player.cancelQueue(audioContext);
+    //started=false;
+    //start();
+});
+player.loader.startLoad(audioContext, instrumentFiles["Drums"].url, instrumentFiles["Drums"].variable);
+player.loader.waitLoad(function () {
+    console.log('done',instrumentFiles["Drums"].variable);
+    instrumentTones["Drums"] = instrumentFiles["Drums"].variable;
+    //player.cancelQueue(audioContext);
+    //started=false;
+    //start();
+});
+player.loader.startLoad(audioContext, instrumentFiles["Bass"].url, instrumentFiles["Bass"].variable);
+player.loader.waitLoad(function () {
+    console.log('done',instrumentFiles["Bass"].variable);
+    instrumentTones["Bass"] = instrumentFiles["Bass"].variable;
+    //player.cancelQueue(audioContext);
+    //started=false;
+    //start();
+});
+full = {
+"Electric Guitar": [
+{
+"tone": "A3",
+"duration": 250,
+"pitch": 45
+},
+{
+"tone": "G3",
+"duration": 125,
+"pitch": 40
+},
+{
+"tone": "C4",
+"duration": 150,
+"pitch": 48
+},
+{
+"tone": "E4",
+"duration": 200,
+"pitch": 52
+},
+{
+"tone": "G4",
+"duration": 175,
+"pitch": 55
+},
+{
+"tone": "A4",
+"duration": 250,
+"pitch": 58
+},
+{
+"tone": "C5",
+"duration": 150,
+"pitch": 60
+},
+{
+"tone": "D5",
+"duration": 125,
+"pitch": 56
+},
+{
+"tone": "E5",
+"duration": 200,
+"pitch": 58
+},
+{
+"tone": "G5",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D5",
+"duration": 200,
+"pitch": 53
+},
+{
+"tone": "C5",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G4",
+"duration": 175,
+"pitch": 53
+},
+{
+"tone": "A4",
+"duration": 200,
+"pitch": 55
+},
+{
+"tone": "G4",
+"duration": 150,
+"pitch": 53
+},
+{
+"tone": "C5",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D5",
+"duration": 150,
+"pitch": 53
+},
+{
+"tone": "E5",
+"duration": 200,
+"pitch": 55
+},
+{
+"tone": "G5",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A5",
+"duration": 200,
+"pitch": 55
+},
+{
+"tone": "C6",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D6",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E6",
+"duration": 175,
+"pitch": 55
+},
+{
+"tone": "F#6",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G6",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A6",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B6",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C7",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D7",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E7",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#7",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G7",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A7",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B7",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "C8",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D8",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "E8",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "F#8",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G8",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A8",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B8",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C9",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D9",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E9",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#9",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G9",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A9",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B9",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "C10",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D10",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "E10",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "F#10",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G10",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A10",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B10",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C11",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D11",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E11",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#11",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G11",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A11",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B11",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "C12",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D12",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "E12",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "F#12",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G12",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A12",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B12",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C13",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D13",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E13",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#13",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G13",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A13",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B13",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "C14",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D14",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "E14",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "F#14",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G14",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A14",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B14",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C15",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D15",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E15",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#15",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G15",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A15",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B15",
+"duration": 125,
+"pitch": 55
+}
+],
+"Drums": [
+{
+"tone": "C4",
+"duration": 100,
+"pitch": 50
+},
+{
+"tone": "G4",
+"duration": 75,
+"pitch": 55
+},
+{
+"tone": "D5",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A4",
+"duration": 150,
+"pitch": 57
+},
+{
+"tone": "C5",
+"duration": 125,
+"pitch": 58
+},
+{
+"tone": "D5",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G5",
+"duration": 175,
+"pitch": 60
+},
+{
+"tone": "A5",
+"duration": 150,
+"pitch": 60
+},
+{
+"tone": "C6",
+"duration": 125,
+"pitch": 60
+},
+{
+"tone": "E6",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G6",
+"duration": 175,
+"pitch": 60
+},
+{
+"tone": "A6",
+"duration": 150,
+"pitch": 60
+},
+{
+"tone": "C7",
+"duration": 125,
+"pitch": 60
+},
+{
+"tone": "D7",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G7",
+"duration": 150,
+"pitch": 60
+},
+{
+"tone": "A7",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C8",
+"duration": 125,
+"pitch": 60
+},
+{
+"tone": "D8",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G8",
+"duration": 125,
+"pitch": 60
+},
+{
+"tone": "A8",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B15",
+"duration": 100,
+"pitch": 60
+}
+],
+"Bass": [
+{
+"tone": "E2",
+"duration": 500,
+"pitch": 25
+},
+{
+"tone": "A2",
+"duration": 375,
+"pitch": 20
+},
+{
+"tone": "C3",
+"duration": 400,
+"pitch": 30
+},
+{
+"tone": "G2",
+"duration": 350,
+"pitch": 28
+},
+{
+"tone": "A2",
+"duration": 275,
+"pitch": 22
+},
+{
+"tone": "E3",
+"duration": 450,
+"pitch": 35
+},
+{
+"tone": "G3",
+"duration": 300,
+"pitch": 38
+},
+{
+"tone": "A3",
+"duration": 250,
+"pitch": 42
+},
+{
+"tone": "C4",
+"duration": 325,
+"pitch": 45
+},
+{
+"tone": "E3",
+"duration": 400,
+"pitch": 37
+},
+{
+"tone": "G3",
+"duration": 250,
+"pitch": 40
+},
+{
+"tone": "A3",
+"duration": 350,
+"pitch": 43
+},
+{
+"tone": "C4",
+"duration": 225,
+"pitch": 48
+},
+{
+"tone": "E4",
+"duration": 300,
+"pitch": 52
+},
+{
+"tone": "G4",
+"duration": 375,
+"pitch": 55
+},
+{
+"tone": "A4",
+"duration": 350,
+"pitch": 58
+},
+{
+"tone": "C5",
+"duration": 275,
+"pitch": 58
+},
+{
+"tone": "E5",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "G5",
+"duration": 250,
+"pitch": 58
+},
+{
+"tone": "A5",
+"duration": 325,
+"pitch": 58
+},
+{
+"tone": "C6",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "D6",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E6",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#6",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G6",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A6",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B6",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C7",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D7",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E7",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "F#7",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "G7",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A7",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B7",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "C8",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "D8",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E8",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#8",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G8",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A8",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B8",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C9",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D9",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E9",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "F#9",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "G9",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A9",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B9",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "C10",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "D10",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E10",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#10",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G10",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A10",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B10",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C11",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D11",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E11",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "F#11",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "G11",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A11",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B11",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "C12",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "D12",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E12",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#12",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G12",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A12",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B12",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C13",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D13",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E13",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "F#13",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "G13",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A13",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B13",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "C14",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "D14",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E14",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#14",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G14",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A14",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B14",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C15",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D15",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E15",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "F#15",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "G15",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A15",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B15",
+"duration": 275,
+"pitch": 60
+}
+]
+}
+console.log(full["Electric Guitar"].length, full["Drums"].length, full["Bass"].length)
+
+function PlayTonesList(intsrumentName) {
+    let intsrument = full[intsrumentName] //JSON.parse($("#result").text())
+    var i = 0
+    var playInstrument = setInterval( function () {
+        console.log(intsrument[i].pitch)
+
+        //await sleep(sleep(guitar[i].duration));
+
+        playKey(intsrument[i].pitch, instrumentTones[intsrumentName], intsrument[i].duration)
+        i ++;
+        if (i >= intsrument.length) {
+            console.log("got in")
+            clearInterval(playInstrument);
+            let stopplay = setTimeout (function () {
+                //player.cancelQueue(audioContext);
+            }, 2000)
+            
+        }
+    }, intsrument[i].duration)
+}
+
+$("#playtones").on("click", function() {
+    PlayTonesList("Bass")
+    PlayTonesList("Electric Guitar")
+    PlayTonesList("Drums")
+    
+})
+
+
+let mediaRecorder;
+let recordedChunks = [];
+
+const audioSourceSelect = document.getElementById('audioSource');
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const audioPlayback = document.getElementById('audioPlayback');
+
+startBtn.addEventListener('click', startRecording);
+stopBtn.addEventListener('click', stopRecording);
+
+async function startRecording() {
+    const audioSource = audioSourceSelect.value;
+    let stream;
+
+    if (audioSource === 'microphone') {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } else if (audioSource === 'system') {
+        // For system audio, you might need additional permissions or browser extensions
+        // The below approach is for illustration; it won't work without additional setup
+        stream = await navigator.mediaDevices.getDisplayMedia({ audio: true, video: true });
+    } else {
+        alert('Unsupported audio source selected');
+        return;
+    }
+
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = handleDataAvailable;
+    mediaRecorder.start();
+
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+}
+
+function stopRecording() {
+    mediaRecorder.stop();
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+}
+
+function handleDataAvailable(event) {
+    if (event.data.size > 0) {
+        recordedChunks.push(event.data);
+        const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+        const url = URL.createObjectURL(blob);
+        audioPlayback.src = url;
+        recordedChunks = [];
+    }
+}
+
+</script>
+</body>
+</html>

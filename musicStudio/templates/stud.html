@@ -1,0 +1,283 @@
+<html>
+	<head>
+        {% load static %}
+
+
+		<script src='https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js'></script>
+
+    
+		<script>
+			var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+			var audioContext = new AudioContextFunc();
+
+      // for(var i=0;i<_tone_0400_GeneralUserGS_sf2_file.zones.length;i++){
+      //   console.log(_tone_0400_GeneralUserGS_sf2_file.zones[i])
+			// 	_tone_0400_GeneralUserGS_sf2_file.zones[i].ahdsr=false;
+			// }
+     
+		</script>
+
+
+</head>
+	<body>
+
+      <button id="play-all"> play all</button>
+      <button id="play-drums"> play Drums</button>
+      <button id="play-bass"> play Bass</button>
+      <button id="play-eguitar"> play Electric Guitar</button>
+      <button id="play-aguitar"> play Acoustic Guitar</button>
+      <button id="play-cello"> play Cello</button>
+      <button id="play-violin"> play Violin</button>
+      <button id="play-viola"> play Viola</button>
+      <button id="play-orchestra"> play Orchestra</button>
+      <button id="play-flute"> play Flute</button>
+      <button id="play-trumpet"> play Trumpet</button>
+      <button id="play-org"> play org</button>
+      <button id="stop"> stop </button>
+
+<script>
+    var gainDrums = audioContext.createGain();gainDrums.connect(audioContext.destination);gainDrums.gain.value=0.5;
+    var gainSynth = audioContext.createGain();gainSynth.connect(audioContext.destination);gainSynth.gain.value=0.3;
+    var gainBass = audioContext.createGain();gainBass.connect(audioContext.destination);gainBass.gain.value=0.7;
+    var gainHit = audioContext.createGain();gainHit.connect(audioContext.destination);gainHit.gain.value=0.5;
+  
+
+    var allInstruments = {
+                //Drums
+                "BassDrum": _drum_35_17_JCLive_sf2_file,
+                "SnareDrum": _drum_40_1_JCLive_sf2_file,
+                "HiHat": _drum_42_1_JCLive_sf2_file,
+                "RideCymbal": _drum_51_1_JCLive_sf2_file,
+                "tom1": _drum_50_1_JCLive_sf2_file,
+                "tom2": _drum_48_1_JCLive_sf2_file,
+                "lowerTom": _drum_41_1_JCLive_sf2_file,
+                // Bass (finguer)
+                "BassGuitar": _tone_0360_FluidR3_GM_sf2_file,
+                // Electric
+                "ElectricGuitar": _tone_0270_FluidR3_GM_sf2_file,
+                // Acoustic
+                "AcousticGuitar": _tone_0270_FluidR3_GM_sf2_file,
+                // Organ
+                "Organ": _tone_0160_FluidR3_GM_sf2_file,
+                // violin
+                "Violin": _tone_0400_JCLive_sf2_file,// _tone_0400_FluidR3_GM_sf2_file, // _tone_0270_FluidR3_GM_sf2_file,// 
+                // violin
+                "Viola": _tone_0410_Aspirin_sf2_file, // _tone_0270_FluidR3_GM_sf2_file,// 
+                // Harp
+                "Harp":_tone_0460_Aspirin_sf2_file, // _tone_0270_FluidR3_GM_sf2_file,// 
+                // Cello
+                "Cello": _tone_0420_Aspirin_sf2_file, // _tone_0270_FluidR3_GM_sf2_file,//
+                // Contrabass
+                "Contrabass": _tone_0430_Aspirin_sf2_file,
+                //
+                "Piano": _tone_0000_Aspirin_sf2_file,
+                //
+                "Saxophone": _tone_0670_FluidR3_GM_sf2_file,// _tone_0670_Aspirin_sf2_file, // Baritone
+                //LeadSynth
+                "LeadSynth": _tone_0870_Aspirin_sf2_file,
+                // same as bass for the moment
+                "BassSynth": _tone_0380_FluidR3_GM_sf2_file,
+
+                "PadSynth": _tone_0910_Aspirin_sf2_file,
+                "KickDrum": _drum_35_17_JCLive_sf2_file,
+                "OpenHat": _drum_51_1_JCLive_sf2_file, // not sure about it
+                "HihatClosed": _drum_42_0_SBLive_sf2,
+                "Clap": _drum_39_0_SBLive_sf2,
+                "AcousticBass": _tone_0320_Aspirin_sf2_file,
+                "ElectricOrgan": _tone_0180_Aspirin_sf2_file,
+                "Trumpet": _tone_0560_Aspirin_sf2_file,
+                "AltoSaxophone": _tone_0650_Aspirin_sf2_file,
+                "Trombone": _tone_0570_Aspirin_sf2_file,
+                "Glockenspiel": _tone_0090_Aspirin_sf2_file,
+                "Percussion": _drum_42_1_JCLive_sf2_file, //hihat
+                
+            }
+
+    for (let index = 0; index < allInstruments.length; index++) {
+      const element = array[index];
+      console.log("here", Object.keys(element))
+    }
+
+function playKey(player, pitch, strtone, time=1, when=0) {
+  
+	player.queueWaveTable(audioContext, audioContext.destination, eval(strtone), when, pitch, time);
+  return player
+}
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+var playInstrument
+var Players = {}
+Players["player"]=new WebAudioFontPlayer();
+for (let i = 0; i < Object.keys(allInstruments).length; i++) {
+    let inst = Object.keys(allInstruments)[i]
+    Players["player_"+inst]=new WebAudioFontPlayer();
+
+    Players["player_"+inst].loader.decodeAfterLoading(audioContext, inst);
+    Players["player"].loader.decodeAfterLoading(audioContext, inst);
+}
+async  function PlayTonesList(intsrumentName, rythm, loopTime, pitch=-1) {
+    let intsrument = rythm[intsrumentName] //JSON.parse($("#result").text())
+    var i = 0
+
+    
+      //player.loader.waitLoad(function () {
+      var bpm = 228
+      var N = 4 * 60 / bpm;
+      var pieceLen = 4 * N;
+      var beatLen=1/16 * N;
+
+      var when = 0 // 
+      var currentTime = audioContext.currentTime + 0.1 // startime
+      var n = rythm[intsrumentName].length
+      
+      if (intsrument[i] != undefined) {
+      
+      var interval = {
+        "end": 0
+      }
+      var sum = 0
+      //for (let i = 0; i<intsrument.length; i++ ) {
+      var playInstrument = setInterval(async function () {
+      if (intsrument[i] != undefined) {
+        ShiftTime = intsrument[i].offset //* MillisecondsPerTick
+        when = ShiftTime + loopTime // intsrument[i].quarter * i
+        interval["end"] = ShiftTime
+            if (pitch != -1)
+                playKey(Players["player"], pitch, allInstruments[intsrumentName], intsrument[i].duration, when);
+            else if (intsrument[i].pitch > 0) {
+                //console.log(intsrumentName, intsrument[i].pitch, allInstruments[intsrumentName], intsrument[i].duration, when)
+                //if (intsrumentName == "AltoSaxophone") 
+                playKey(Players["player"], intsrument[i].pitch , allInstruments[intsrumentName], intsrument[i].duration, when);
+                if (intsrumentName == "Violin") {  
+                  let stopplay = setTimeout (function () {
+                    Players["player"].cancelQueue(audioContext);
+                  }, intsrument[i].duration+500 )
+                }
+                // if (intsrumentName == "Saxophone") {  
+                //   let stopplay = setTimeout (function () {
+                //     Players["player"].cancelQueue(audioContext);
+                //   }, intsrument[i].duration+500 )
+                // }
+                // else {  
+                //   let stopplay = setTimeout (function () {
+                //       Players["player"].cancelQueue(audioContext);
+                //   }, intsrument[i].duration+500 )
+                // }
+                //when = intsrument[i].duration/1000+(intsrument[i].offset/10) + audioContext.currentTime + 0.1
+                console.log(intsrumentName, i, ShiftTime, when)
+                //when += intsrument[i].duration
+              }
+              intsrument[i].duration += ShiftTime
+              if (i >= intsrument[i].length) {
+                clearInterval(playInstrument)
+                i = 0
+              }
+              i++
+              //await(sleep(ShiftTime))
+        }
+
+      }, 30)
+      //loopTime += when
+      return loopTime
+      console.log("here", interval["end"] )
+    }
+  //})
+}
+var drumsLoop
+
+$("#play-drums").on("click", function() {
+    
+    PlayTonesList("drumBass", rythm, 35)
+    PlayTonesList("snare", rythm, 40)
+    PlayTonesList("hihat", rythm, 42)
+    PlayTonesList("cymbal",rythm, 50)
+    PlayTonesList("tom1", rythm, 51)
+    PlayTonesList("tom2", rythm, 48)
+    PlayTonesList("lowerTom", rythm, 41)
+ 
+})
+
+$("#play-bass").on("click", function() {
+  var when = audioContext.currentTime + 3
+  playKey(30, allInstruments["BassGuitar"], 1000, when) 
+    // PlayTonesList("BassGuitar", electricRythm, 0)
+    // PlayTonesList("ElectricGuitar", electricRythm, 0)
+    // PlayTonesList("ElectricGuitar", electricRythm, 0)
+})
+
+
+$("#play-all").on("click", function() {
+    // drumsLoop = setTimeout(async function () {
+    //     for (let i = 0; i < Object.keys(rythm).length; i++) {
+    //         const key = Object.keys(rythm)[i];
+    //         PlayTonesList(key, rythm)
+    //     }
+    //     //await sleep(30000)
+    // }, 1)
+
+    $.getJSON({
+	    //url: "{% static '/Bach_-_Brandenburg_Concerto_No._3_-_BWV_1041.json' %}",
+	    url: "{% static '/gemMidiTo.json' %}",
+	    success: function ( data ) {
+          if (data["JazzPiece"] != undefined)
+            data = data["JazzPiece"]
+          
+          console.log(data)
+
+          var bpm = 228; // tempo ||| 4 is the time ..
+          // var N = 4 * 60 / bpm;
+          // var pieceLen = 4 * N;
+          // var beatLen=1/16 * N;
+
+          let TicksPerBeat = 96 // (assuming standard resolution)
+          let SecondsPerBeat = 4* 60 / bpm //= 0.26315789 seconds per beat
+          let MillisecondsPerTick= (SecondsPerBeat * 1000) / TicksPerBeat //= 0.2741228 ms per tick
+          var loopTime = 0
+          drumsLoop = setInterval(function () {
+            for (let i = 0; i < Object.keys(data).length; i++) {
+                const part = Object.keys(data)[i];
+                const instr = Object.keys(data[part])[0];
+                
+                //console.log(part, instr, data[part][instr])
+                loopTime = PlayTonesList(instr, data[part], loopTime)
+          
+            }
+          }, 3000)
+        }
+    })
+
+})
+
+function start() {
+    $.getJSON({
+        //url: "{% static '/Bach_-_Brandenburg_Concerto_No._3_-_BWV_1041.json' %}",
+        url: "{% static '/jsonfiles/tripitchals/paganini.json' %}",
+        success: function ( data ) {
+        if (data["JazzPiece"] != undefined)
+            data = data["JazzPiece"]
+        console.log(data)
+
+        for (let index = 0; index < data["violin 0"]["Violin"].length; index++) {
+          const note = data["violin 0"]["Violin"][index];
+	        player.queueWaveTable(audioContext, audioContext.destination, eval(allInstruments["Violin"]), note.of, pitch, time);
+          
+        }
+        //playNotes(data["Piano"]["Piano"], "Piano")
+        //playNotes(data["Saxophone"]["Saxophone"], "Saxophone")
+        playNotes(data["violin 0"]["Violin"], "Violin")
+        playNotes(data["violin 0"]["Violin"], "Violin")
+        }
+    })
+}
+
+$("#stop").on("click", function() {
+    clearInterval(drumsLoop)
+    clearInterval(playInstrument);
+
+    Players["player"].cancelQueue(audioContext);
+})
+</script>
+	</body>
+</html>
