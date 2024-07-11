@@ -59,7 +59,8 @@
 
         }
         nav {
-            margin-bottom: 2px;
+            /* margin-bottom: 2px; */
+            border-bottom: rgba(243,220,208,0.2) solid 2px;
         }
         #logo img {
             width: 100px;
@@ -102,7 +103,7 @@
             font-style: normal;
             font-variation-settings:
                 "ELSH" 0; */
-            font-family: "Foldit", sans-serif;
+            /* font-family: "Foldit", sans-serif; */
             font-optical-sizing: auto;
             font-weight: 500;
             font-style: normal;
@@ -135,8 +136,9 @@
         }
         .wrap {
             padding: 5px;
-            background-color: #F3DCD0;
-            color: rgb(31, 97, 251) ;
+            /* background-color: #F3DCD0; */
+            color: rgb(31, 97, 251) #F3DCD0 ;
+             /* rgb(31, 97, 251); */
         }
         /* The typing effect */
         @keyframes typing {
@@ -211,6 +213,10 @@
         #cards-section .cards.technology-card {
             background-image: url("{% static '/imgs/technology.png' %}");
         }
+        #cards-section .cards.language-card {
+            background-image: url("{% static '/imgs/language.png' %}");
+            background-size: contain;
+        }
         footer {
             height: 50px;
             text-align: right;
@@ -264,6 +270,9 @@
         </div>
         <div class="cards maths-card">
             <h2><a href="{% url 'studio' %}">Maths Section</a></h2>
+        </div>
+        <div class="cards language-card">
+            <h2><a href="{% url 'studio' %}">Languages Section</a></h2>
         </div>
         <div class="cards physics-card">
             <h2><a href="{% url 'studio' %}">Physics Section</a></h2>
