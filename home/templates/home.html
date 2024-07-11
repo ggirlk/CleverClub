@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Danfo&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Foldit:wght@100..900&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            /* overflow: hidden; */
+            /* height: 100vh; */
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #spaceCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        header {
+            height: 250px;
+            background-image: url("{% static 'imgs/galaxy.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position:bottom;
+        }
+        nav, nav ul, #cards-section {
+            display: flex;
+            justify-content: space-between;
+        }
+        nav ul li {
+            margin-right: 20px;
+            list-style-type: none;
+        }
+        nav {
+            /* background-color: rgba(100, 107, 234, 0.15); */
+
+        }
+        #about-section {
+            background-color: rgba(31, 97, 251, 0.3);
+            /* background-color: rgb(255, 255, 255, 0.15); */
+            /* background-color: rgba(115, 122, 242, 0.15); */
+
+        }
+        nav {
+            margin-bottom: 2px;
+        }
+        #logo img {
+            width: 100px;
+            height: 50px;
+            padding-left: 9px;
+        }
+        /* #logo, nav ul { */
+        nav ul {
+            padding-top: 10px;
+        }
+        #logo {
+            padding: 5px;
+            /* padding-left: 20px; */
+            /* padding-left: 20px; */
+        }
+        #logo a, nav ul a {
+            text-decoration: none;
+            /* color: #db024a; */
+            color: #DD5A44;
+             /* #cf3e6f;  */
+            /* -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: #F3DCD0 ; */
+            font-size: 1.2rem;
+            /* font-weight: bolder; */
+            font-family: "Roboto Slab", serif;
+            /* font-family: "Danfo", serif; */
+            font-optical-sizing: auto;
+            font-weight: bold;
+            font-style: normal;
+            font-variation-settings:
+                "ELSH" 0;
+        }
+        #about-section h1 {
+            text-align: center;
+            font-size: 4rem;
+
+            /* font-family: "Danfo", serif;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+            font-variation-settings:
+                "ELSH" 0; */
+            font-family: "Foldit", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+
+            padding-top: 35px;
+            margin: 0px;
+            color: rgb(31, 97, 251);
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: white;
+            /* rgb(31, 46, 251) */
+            
+        }
+        #about-section p {
+            text-align: center;
+            font-size: 1.4rem;
+            padding: 10px;
+            /* padding: 50px; */
+        }
+        
+        .typewriter {
+            overflow: hidden; /* Ensures the content is not revealed until the animation */
+            border-right: .15em solid orange; /* The typwriter cursor */
+            white-space: nowrap; /* Keeps the content on a single line */
+            margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+            letter-spacing: .15em; /* Adjust as needed */
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+            
+        }
+        .wrap {
+            padding: 5px;
+            background-color: #F3DCD0;
+            color: rgb(31, 97, 251) ;
+        }
+        /* The typing effect */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+        #cards-section {
+            width: 85%;
+            margin: auto;
+            margin-top: 50px;
+            display: flex;
+            justify-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        #cards-section .cards {
+            width: 300px;
+            height: 500px;
+            border-radius: 10px;
+            background-color: rgba(31, 97, 251, 0.3);
+            /* rgba(227, 198, 135, 0.3); */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position:center;
+            border: 1px groove #F3DCD0;
+            margin: 10px;
+
+        }
+        #cards-section .cards h2 {
+            background-color: #F3DCD0  ;
+             /* rgb(209, 56, 0) rgba(31,97,251,0.6) rgba(221,90,68,0.6); */
+            padding-top: 5%;
+            padding-bottom: 1%;
+            text-align: center;
+        }
+        #cards-section .cards h2 a {
+            color: rgb(31, 97, 251) ;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        #cards-section .cards.music-card {
+            background-image: url("{% static '/imgs/music0.png' %}");
+        }
+        #cards-section .cards.computing-card {
+            background-image: url("{% static '/imgs/computing.png' %}");
+        }
+        
+        #cards-section .cards.puzzle-card {
+            background-image: url("{% static '/imgs/puzzle.png' %}");
+        }
+        #cards-section .cards.manga-card {
+            background-image: url("{% static '/imgs/manga.png' %}");
+        }
+        #cards-section .cards.maths-card {
+            background-image: url("{% static '/imgs/maths.png' %}");
+        }
+        #cards-section .cards.physics-card {
+            background-image: url("{% static '/imgs/physics.png' %}");
+        }
+        #cards-section .cards.chemistry-card {
+            background-image: url("{% static '/imgs/chemistry.png' %}");
+        }
+        #cards-section .cards.biology-card {
+            background-image: url("{% static '/imgs/biology.png' %}");
+        }
+        #cards-section .cards.technology-card {
+            background-image: url("{% static '/imgs/technology.png' %}");
+        }
+        footer {
+            height: 50px;
+            text-align: right;
+            background-color: rgba(31, 97, 251, 0.25);
+            margin-top: 10px;
+            padding: 10px 10px 3px 0px;
+            color: #F3DCD0;
+        }
+        footer a {
+            text-decoration: none;
+            color: #F3DCD0;
+        }
+    </style>
+</head>
+<body id="main">
+    <canvas id="spaceCanvas"></canvas>
+    <header>
+        <nav>
+            <div id="logo">
+                <a><img src="{% static '/imgs/Infinite Dream-logos_transparent0.png' %}" alt="logo"></a>
+                <!-- <p><a href="">Clever Club</a></p> -->
+            </div>
+            <div id="top-left-menu">
+                <ul>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div id="about-section">
+            <div>
+                <h1>Welcome to the AI Galaxy!</h1>
+                <p class="typewrite" data-period="8000" 
+                data-type='[ "Our platform is where education and entertainment come together!", 
+                "Our mission is to make learning fun and effective by enhancing creativity, imagination, and analyzing skills.", 
+                "Assisted by advanced AI, we provide personalized and innovative resources and interactive tools for students, teachers, and curious minds alike.", 
+                "Join us on this exciting journey to make education enjoyable and accessible for all!" 
+                ]'>
+                    <span class="wrap"></span>
+                </p>
+            </div>    
+        </div>
+    </header>
+    
+    <section id="cards-section">
+        <div class="cards music-card">
+            <h2><a href="{% url 'studio' %}">Music Section</a></h2>
+        </div>
+        <div class="cards computing-card">
+            <h2><a href="{% url 'studio' %}">Computing Section</a></h2>
+        </div>
+        <div class="cards maths-card">
+            <h2><a href="{% url 'studio' %}">Maths Section</a></h2>
+        </div>
+        <div class="cards physics-card">
+            <h2><a href="{% url 'studio' %}">Physics Section</a></h2>
+        </div>
+        <div class="cards chemistry-card">
+            <h2><a href="{% url 'studio' %}">Chemistry Section</a></h2>
+        </div>
+        <div class="cards technology-card">
+            <h2><a href="{% url 'studio' %}">Technology Section</a></h2>
+        </div>
+        <div class="cards biology-card">
+            <h2><a href="{% url 'studio' %}">Biology Section</a></h2>
+        </div>
+        <div class="cards puzzle-card">
+            <h2><a href="{% url 'studio' %}">Puzzle Section</a></h2>
+        </div>
+        <div class="cards manga-card">
+            <h2><a href="{% url 'studio' %}">Manga Section</a></h2>
+        </div>
+    </section>
+    <footer>
+        <p>Made by <a href="https://www.linkedin.com/in/1128khouloud/">Khouloud</a> &copy;2024</p>
+    </footer>
+
+    <script>
+
+    var TxtType = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 10000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
+        }
+
+        setTimeout(function() {
+            that.tick();
+        }, delta);
+    };
+
+    window.onload = function() {
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+              new TxtType(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+        document.body.appendChild(css);
+    };
+
+
+
+        const canvas = document.getElementById('spaceCanvas');
+        const ctx = canvas.getContext('2d');
+        const stars = [];
+        const starCount = 100;
+        const cursorAtoms = [];
+        const cursorAtomCount = 5;
+        const colors = ['#95bcf5', '#fc6a9a' ,'#f0d3bd', '#95dbf5', '#fff']
+        const body = document.getElementById("main")
+
+        let angle = 0;
+
+        canvas.width = body.clientWidth;
+        canvas.height = body.clientHeight;
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function createStars() {
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: random(0, canvas.width),
+                    y: random(0, canvas.height),
+                    radius: random(0.5, 2),
+                    speed: random(0.2, 1)
+                });
+            }
+        }
+
+        function createCursorAtoms() {
+            for (let i = 0; i < cursorAtomCount; i++) {
+                cursorAtoms.push({
+                    x: 30 + random(-10, 20),
+                    y: 30 + random(-10, 20),
+                    nucleusRadius: random(3, 7),
+                    electronRadius: random(1, 2),
+                    orbitRadius: random(10, 20),
+                    orbitSpeed: random(0.02, 0.05),
+                    orbitAngle: random(0, 2 * Math.PI)
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+        }
+
+        function drawCursorAtoms() {
+            cursorAtoms.forEach(atom => {
+                const electronX = atom.x + atom.orbitRadius * Math.cos(atom.orbitAngle);
+                const electronY = atom.y + atom.orbitRadius * Math.sin(atom.orbitAngle);
+
+                // Draw nucleus
+                ctx.fillStyle = '#fff';// '#f0d3bd';
+                ctx.beginPath();
+                ctx.arc(atom.x, atom.y, atom.nucleusRadius, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Draw electron
+                ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)] //'#F0DEA5';
+                ctx.beginPath();
+                ctx.arc(electronX, electronY, atom.electronRadius, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Draw orbit path
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.beginPath();
+                ctx.arc(atom.x, atom.y, atom.orbitRadius, 0, 2 * Math.PI);
+                ctx.stroke();
+            });
+        }
+
+        function updateStars() {
+            stars.forEach(star => {
+                star.y += star.speed;
+                if (star.y > canvas.height) {
+                    star.y = 0;
+                    star.x = random(0, canvas.width);
+                }
+            });
+        }
+
+        function updateCursorAtoms() {
+            cursorAtoms.forEach(atom => {
+                atom.orbitAngle += atom.orbitSpeed;
+                if (atom.orbitAngle > 2 * Math.PI) {
+                    atom.orbitAngle = 0;
+                }
+
+            });
+        }
+
+        function animate() {
+            drawStars();
+            // drawCursorAtoms();
+            updateStars();
+            // updateCursorAtoms();
+            requestAnimationFrame(animate);
+        }
+
+        function updateCursorAtomsPosition(event) {
+            cursorAtoms.forEach(atom => {
+                atom.x = event.clientX + random(-10, 10);
+                atom.y = event.clientY + random(-10, 10);
+            });
+        }
+
+        createStars();
+        createCursorAtoms();
+        animate();
+
+        // window.addEventListener('mousemove', updateCursorAtomsPosition);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars.length = 0;
+            createStars();
+        });
+    </script>
+</body>
+</html>
