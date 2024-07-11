@@ -157,17 +157,18 @@
             margin-top: 50px;
             display: flex;
             justify-items: center;
-            justify-content: space-between;
+            justify-content: space-around;
             flex-wrap: wrap;
         }
         #cards-section .cards {
-            width: 300px;
-            height: 500px;
+            width: 290px;
+            /* height: 500px; */
+            height: 450px;
             border-radius: 10px;
             background-color: rgba(31, 97, 251, 0.3);
             /* rgba(227, 198, 135, 0.3); */
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: contain;
             background-position:center;
             border: 1px groove #F3DCD0;
             margin: 10px;
@@ -187,13 +188,16 @@
         }
         #cards-section .cards.music-card {
             background-image: url("{% static '/imgs/music0.png' %}");
+            background-size: cover;
         }
         #cards-section .cards.computing-card {
             background-image: url("{% static '/imgs/computing.png' %}");
+            background-size: 220%;
         }
         
         #cards-section .cards.puzzle-card {
             background-image: url("{% static '/imgs/puzzle.png' %}");
+            background-size: contain;
         }
         #cards-section .cards.manga-card {
             background-image: url("{% static '/imgs/manga.png' %}");
@@ -203,25 +207,37 @@
         }
         #cards-section .cards.physics-card {
             background-image: url("{% static '/imgs/physics.png' %}");
+            background-size: contain;
         }
         #cards-section .cards.chemistry-card {
             background-image: url("{% static '/imgs/chemistry.png' %}");
+            background-size: contain;
         }
         #cards-section .cards.biology-card {
             background-image: url("{% static '/imgs/biology.png' %}");
+            background-size: contain;
         }
         #cards-section .cards.technology-card {
             background-image: url("{% static '/imgs/technology.png' %}");
+            background-size: 190%;
         }
         #cards-section .cards.language-card {
             background-image: url("{% static '/imgs/language.png' %}");
             background-size: contain;
         }
+        #cards-section .cards.drawing-card {
+            background-image: url("{% static '/imgs/drawing.png' %}");
+            background-size: 135%;
+        }
+        #cards-section .cards.stories-card {
+            background-image: url("{% static '/imgs/stories.png' %}");
+            background-size: 130%;
+        }
         footer {
             height: 50px;
             text-align: right;
             background-color: rgba(31, 97, 251, 0.25);
-            margin-top: 10px;
+            margin-top: 40px;
             padding: 10px 10px 3px 0px;
             color: #F3DCD0;
         }
@@ -288,6 +304,13 @@
         </div>
         <div class="cards puzzle-card">
             <h2><a href="{% url 'studio' %}">Puzzle Section</a></h2>
+        </div>
+        
+        <div class="cards drawing-card">
+            <h2><a href="{% url 'studio' %}">Drawing Section</a></h2>
+        </div>
+        <div class="cards stories-card">
+            <h2><a href="{% url 'studio' %}">Stories Section</a></h2>
         </div>
         <div class="cards manga-card">
             <h2><a href="{% url 'studio' %}">Manga Section</a></h2>
