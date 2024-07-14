@@ -1,0 +1,6 @@
+*.txt
+*.json
+*.wav
+.env
+*/migrations/
+db.sqlite3
