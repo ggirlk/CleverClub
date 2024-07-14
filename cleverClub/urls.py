@@ -15,12 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-#from .import views
+from django.conf import settings
+from django.conf.urls.static import static
+
+#from .import views /admin/customuser/add/
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('custom_admin.urls')),
+    path('', include('user.urls')),
     path('', include('home.urls')),
-    path('', include('musicStudio.urls')),
-
-
+    path('', include('musicStudio.urls'))
 ]
+
+urlpatterns += [
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -29,7 +29,44 @@
 
     <script src="app.js"></script>
 
-
+ //await(sleep(ShiftTime))
+      var playInstrument = setInterval( function () {
+        //var startAfter = setTimeout(function() {
+          when += i * intsrument[i].quarter
+          if (pitch != -1)
+              playKey(pitch, allInstruments[intsrumentName], intsrument[i].duration, when);
+          else if (intsrument[i].pitch > 0) {
+              //console.log(intsrumentName, intsrument[i].pitch, allInstruments[intsrumentName], intsrument[i].duration, when)
+              //if (intsrumentName == "AltoSaxophone") 
+              var player = playKey(intsrument[i].pitch , allInstruments[intsrumentName], intsrument[i].durationo, when);
+              if (intsrumentName == "Violin") {  
+                let stopplay = setTimeout (function () {
+                    player.cancelQueue(audioContext);
+                }, intsrument[i].duration+500 )
+              }
+              // else {  
+              //   let stopplay = setTimeout (function () {
+              //       player.cancelQueue(audioContext);
+              //   }, intsrument[i].duration+200 )
+              // }
+              //when = intsrument[i].duration/1000+(intsrument[i].offset/10) + audioContext.currentTime + 0.1
+              console.log(intsrumentName, i, ShiftTime, when)
+              //when += intsrument[i].duration
+            }
+            i ++;
+        //}, currentTime+ShiftTime)
+        //i ++;
+        if (i >= intsrument.length) {
+            console.log("got in")
+            clearInterval(playInstrument);
+            let stopplay = setTimeout (function () {
+                //player.cancelQueue(audioContext);
+            }, intsrument[i-1].duration)
+            
+        } else {
+          console.log("can't be found",intsrumentName)
+        }
+    }, 1 )
 
 <script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script> 
 <script>
@@ -467,7 +504,2432 @@ $("#generate").on('click', function() {
 // funk
 // [ { "tone": "C4", "duration": 250, "pitch": 36 }, { "tone": "D4", "duration": 250, "pitch": 38 }, { "tone": "E4", "duration": 250, "pitch": 40 }, { "tone": "F4", "duration": 250, "pitch": 41 }, { "tone": "G4", "duration": 250, "pitch": 43 }, { "tone": "A4", "duration": 250, "pitch": 45 }, { "tone": "B4", "duration": 250, "pitch": 47 }, { "tone": "C5", "duration": 250, "pitch": 48 }, { "tone": "C4", "duration": 125, "pitch": 36 }, { "tone": "E4", "duration": 125, "pitch": 40 }, { "tone": "G4", "duration": 125, "pitch": 43 }, { "tone": "B4", "duration": 125, "pitch": 47 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "D5", "duration": 125, "pitch": 50 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "F5", "duration": 125, "pitch": 53 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "A5", "duration": 125, "pitch": 57 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "C6", "duration": 125, "pitch": 60 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "A5", "duration": 125, "pitch": 57 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "F5", "duration": 125, "pitch": 53 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "D5", "duration": 125, "pitch": 50 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "B4", "duration": 125, "pitch": 47 }, { "tone": "G4", "duration": 125, "pitch": 43 }, { "tone": "E4", "duration": 125, "pitch": 40 }, { "tone": "C4", "duration": 125, "pitch": 36 }, { "tone": "F4", "duration": 125, "pitch": 41 }, { "tone": "A4", "duration": 125, "pitch": 45 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "C6", "duration": 125, "pitch": 60 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "A5", "duration": 125, "pitch": 57 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "F5", "duration": 125, "pitch": 53 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "D5", "duration": 125, "pitch": 50 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "B4", "duration": 125, "pitch": 47 }, { "tone": "G4", "duration": 125, "pitch": 43 }, { "tone": "E4", "duration": 125, "pitch": 40 }, { "tone": "C4", "duration": 125, "pitch": 36 }, { "tone": "F4", "duration": 125, "pitch": 41 }, { "tone": "A4", "duration": 125, "pitch": 45 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "C6", "duration": 125, "pitch": 60 }, { "tone": "B5", "duration": 125, "pitch": 59 }, { "tone": "A5", "duration": 125, "pitch": 57 }, { "tone": "G5", "duration": 125, "pitch": 55 }, { "tone": "F5", "duration": 125, "pitch": 53 }, { "tone": "E5", "duration": 125, "pitch": 52 }, { "tone": "D5", "duration": 125, "pitch": 50 }, { "tone": "C5", "duration": 125, "pitch": 48 }, { "tone": "B4", "duration": 125, "pitch": 47 }, { "tone": "G4", "duration": 125, "pitch": 43 }, { "tone": "E4", "duration": 125, "pitch": 40 }, { "tone": "C4", "duration": 125, "pitch": 36 } ]
 
-var full 
+var full = [
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A3",
+    "duration": 250,
+    "pitch": 45
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C4",
+    "duration": 100,
+    "pitch": 50
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E2",
+    "duration": 500,
+    "pitch": 25
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G3",
+    "duration": 125,
+    "pitch": 40
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G4",
+    "duration": 75,
+    "pitch": 55
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A2",
+    "duration": 375,
+    "pitch": 20
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C4",
+    "duration": 150,
+    "pitch": 48
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D5",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C3",
+    "duration": 400,
+    "pitch": 30
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E4",
+    "duration": 200,
+    "pitch": 52
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A4",
+    "duration": 150,
+    "pitch": 57
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G2",
+    "duration": 350,
+    "pitch": 28
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G4",
+    "duration": 175,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C5",
+    "duration": 125,
+    "pitch": 58
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A2",
+    "duration": 275,
+    "pitch": 22
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A4",
+    "duration": 250,
+    "pitch": 58
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D5",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E3",
+    "duration": 450,
+    "pitch": 35
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C5",
+    "duration": 150,
+    "pitch": 60
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G5",
+    "duration": 175,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G3",
+    "duration": 300,
+    "pitch": 38
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D5",
+    "duration": 125,
+    "pitch": 56
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A5",
+    "duration": 150,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A3",
+    "duration": 250,
+    "pitch": 42
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E5",
+    "duration": 200,
+    "pitch": 58
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C6",
+    "duration": 125,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C4",
+    "duration": 325,
+    "pitch": 45
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G5",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "E6",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E3",
+    "duration": 400,
+    "pitch": 37
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D5",
+    "duration": 200,
+    "pitch": 53
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G6",
+    "duration": 175,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G3",
+    "duration": 250,
+    "pitch": 40
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C5",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A6",
+    "duration": 150,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A3",
+    "duration": 350,
+    "pitch": 43
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G4",
+    "duration": 175,
+    "pitch": 53
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C7",
+    "duration": 125,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C4",
+    "duration": 225,
+    "pitch": 48
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A4",
+    "duration": 200,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D7",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E4",
+    "duration": 300,
+    "pitch": 52
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G4",
+    "duration": 150,
+    "pitch": 53
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G7",
+    "duration": 150,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G4",
+    "duration": 375,
+    "pitch": 55
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C5",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A7",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A4",
+    "duration": 350,
+    "pitch": 58
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D5",
+    "duration": 150,
+    "pitch": 53
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C8",
+    "duration": 125,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C5",
+    "duration": 275,
+    "pitch": 58
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E5",
+    "duration": 200,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D8",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E5",
+    "duration": 350,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G5",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G8",
+    "duration": 125,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G5",
+    "duration": 250,
+    "pitch": 58
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A5",
+    "duration": 200,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A8",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A5",
+    "duration": 325,
+    "pitch": 58
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C6",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C9",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C6",
+    "duration": 350,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D6",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D9",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "D6",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E6",
+    "duration": 175,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "E9",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E6",
+    "duration": 300,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "F#6",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "F#9",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "F#6",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G6",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G9",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G6",
+    "duration": 300,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A6",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A9",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A6",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "B6",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "B9",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "B6",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C7",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C10",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C7",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D7",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D10",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "D7",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E7",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "E10",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E7",
+    "duration": 275,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "F#7",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "F#10",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "F#7",
+    "duration": 350,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G7",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G10",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G7",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A7",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A10",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A7",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "B7",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "B10",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "B7",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C8",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C11",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C8",
+    "duration": 300,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D8",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D11",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "D8",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E8",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "E11",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E8",
+    "duration": 300,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "F#8",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "F#11",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "F#8",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G8",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G11",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G8",
+    "duration": 300,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A8",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A11",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A8",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "B8",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "B11",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "B8",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C9",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C12",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C9",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D9",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D12",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "D9",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E9",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "E12",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E9",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "F#9",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "F#12",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "F#9",
+    "duration": 300,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G9",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G12",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G9",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A9",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A12",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A9",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "B9",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "B12",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "B9",
+    "duration": 275,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C10",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C13",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C10",
+    "duration": 350,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D10",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D13",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "D10",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E10",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "E13",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E10",
+    "duration": 300,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "F#10",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "F#13",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "F#10",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G10",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G13",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G10",
+    "duration": 300,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A10",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A13",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A10",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "B10",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "B13",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "B10",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C11",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C14",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C11",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D11",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D14",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "D11",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E11",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "E14",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E11",
+    "duration": 275,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "F#11",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "F#14",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "F#11",
+    "duration": 350,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "G11",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "G14",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "G11",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "A11",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "A14",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "A11",
+    "duration": 325,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "B11",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "B14",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "B11",
+    "duration": 275,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "C12",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "C15",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "C12",
+    "duration": 350,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "D12",
+    "duration": 125,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "D15",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "D12",
+    "duration": 250,
+    "pitch": 60
+  },
+  {
+    "instrument": "Electric Guitar",
+    "tone": "E12",
+    "duration": 150,
+    "pitch": 55
+  },
+  {
+    "instrument": "Drums",
+    "tone": "E15",
+    "duration": 100,
+    "pitch": 60
+  },
+  {
+    "instrument": "Bass",
+    "tone": "E12",
+    "duration": 300,
+    "pitch": 60
+  },
+]
+
+full = {
+"Electric Guitar": [
+{
+"tone": "A3",
+"duration": 250,
+"pitch": 45
+},
+{
+"tone": "G3",
+"duration": 125,
+"pitch": 40
+},
+{
+"tone": "C4",
+"duration": 150,
+"pitch": 48
+},
+{
+"tone": "E4",
+"duration": 200,
+"pitch": 52
+},
+{
+"tone": "G4",
+"duration": 175,
+"pitch": 55
+},
+{
+"tone": "A4",
+"duration": 250,
+"pitch": 58
+},
+{
+"tone": "C5",
+"duration": 150,
+"pitch": 60
+},
+{
+"tone": "D5",
+"duration": 125,
+"pitch": 56
+},
+{
+"tone": "E5",
+"duration": 200,
+"pitch": 58
+},
+{
+"tone": "G5",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D5",
+"duration": 200,
+"pitch": 53
+},
+{
+"tone": "C5",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G4",
+"duration": 175,
+"pitch": 53
+},
+{
+"tone": "A4",
+"duration": 200,
+"pitch": 55
+},
+{
+"tone": "G4",
+"duration": 150,
+"pitch": 53
+},
+{
+"tone": "C5",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D5",
+"duration": 150,
+"pitch": 53
+},
+{
+"tone": "E5",
+"duration": 200,
+"pitch": 55
+},
+{
+"tone": "G5",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A5",
+"duration": 200,
+"pitch": 55
+},
+{
+"tone": "C6",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D6",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E6",
+"duration": 175,
+"pitch": 55
+},
+{
+"tone": "F#6",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G6",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A6",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B6",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C7",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D7",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E7",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#7",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G7",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A7",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B7",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "C8",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D8",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "E8",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "F#8",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G8",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A8",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B8",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C9",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D9",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E9",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#9",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G9",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A9",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B9",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "C10",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D10",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "E10",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "F#10",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G10",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A10",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B10",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C11",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D11",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E11",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#11",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G11",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A11",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B11",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "C12",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D12",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "E12",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "F#12",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G12",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A12",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B12",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C13",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D13",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E13",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#13",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G13",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A13",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B13",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "C14",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "D14",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "E14",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "F#14",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "G14",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "A14",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "B14",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "C15",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "D15",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "E15",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "F#15",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "G15",
+"duration": 125,
+"pitch": 55
+},
+{
+"tone": "A15",
+"duration": 150,
+"pitch": 55
+},
+{
+"tone": "B15",
+"duration": 125,
+"pitch": 55
+}
+],
+"Drums": [
+{
+"tone": "C4",
+"duration": 100,
+"pitch": 50
+},
+{
+"tone": "G4",
+"duration": 75,
+"pitch": 55
+},
+{
+"tone": "D5",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A4",
+"duration": 150,
+"pitch": 57
+},
+{
+"tone": "C5",
+"duration": 125,
+"pitch": 58
+},
+{
+"tone": "D5",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G5",
+"duration": 175,
+"pitch": 60
+},
+{
+"tone": "A5",
+"duration": 150,
+"pitch": 60
+},
+{
+"tone": "C6",
+"duration": 125,
+"pitch": 60
+},
+{
+"tone": "E6",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G6",
+"duration": 175,
+"pitch": 60
+},
+{
+"tone": "A6",
+"duration": 150,
+"pitch": 60
+},
+{
+"tone": "C7",
+"duration": 125,
+"pitch": 60
+},
+{
+"tone": "D7",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G7",
+"duration": 150,
+"pitch": 60
+},
+{
+"tone": "A7",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C8",
+"duration": 125,
+"pitch": 60
+},
+{
+"tone": "D8",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G8",
+"duration": 125,
+"pitch": 60
+},
+{
+"tone": "A8",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B9",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B10",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B11",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B12",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B13",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B14",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "C15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "D15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "E15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "F#15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "G15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "A15",
+"duration": 100,
+"pitch": 60
+},
+{
+"tone": "B15",
+"duration": 100,
+"pitch": 60
+}
+],
+"Bass": [
+{
+"tone": "E2",
+"duration": 500,
+"pitch": 25
+},
+{
+"tone": "A2",
+"duration": 375,
+"pitch": 20
+},
+{
+"tone": "C3",
+"duration": 400,
+"pitch": 30
+},
+{
+"tone": "G2",
+"duration": 350,
+"pitch": 28
+},
+{
+"tone": "A2",
+"duration": 275,
+"pitch": 22
+},
+{
+"tone": "E3",
+"duration": 450,
+"pitch": 35
+},
+{
+"tone": "G3",
+"duration": 300,
+"pitch": 38
+},
+{
+"tone": "A3",
+"duration": 250,
+"pitch": 42
+},
+{
+"tone": "C4",
+"duration": 325,
+"pitch": 45
+},
+{
+"tone": "E3",
+"duration": 400,
+"pitch": 37
+},
+{
+"tone": "G3",
+"duration": 250,
+"pitch": 40
+},
+{
+"tone": "A3",
+"duration": 350,
+"pitch": 43
+},
+{
+"tone": "C4",
+"duration": 225,
+"pitch": 48
+},
+{
+"tone": "E4",
+"duration": 300,
+"pitch": 52
+},
+{
+"tone": "G4",
+"duration": 375,
+"pitch": 55
+},
+{
+"tone": "A4",
+"duration": 350,
+"pitch": 58
+},
+{
+"tone": "C5",
+"duration": 275,
+"pitch": 58
+},
+{
+"tone": "E5",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "G5",
+"duration": 250,
+"pitch": 58
+},
+{
+"tone": "A5",
+"duration": 325,
+"pitch": 58
+},
+{
+"tone": "C6",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "D6",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E6",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#6",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G6",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A6",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B6",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C7",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D7",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E7",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "F#7",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "G7",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A7",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B7",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "C8",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "D8",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E8",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#8",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G8",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A8",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B8",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C9",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D9",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E9",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "F#9",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "G9",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A9",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B9",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "C10",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "D10",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E10",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#10",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G10",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A10",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B10",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C11",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D11",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E11",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "F#11",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "G11",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A11",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B11",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "C12",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "D12",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E12",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#12",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G12",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A12",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B12",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C13",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D13",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E13",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "F#13",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "G13",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A13",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B13",
+"duration": 275,
+"pitch": 60
+},
+{
+"tone": "C14",
+"duration": 350,
+"pitch": 60
+},
+{
+"tone": "D14",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "E14",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "F#14",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "G14",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "A14",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "B14",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "C15",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "D15",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "E15",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "F#15",
+"duration": 300,
+"pitch": 60
+},
+{
+"tone": "G15",
+"duration": 250,
+"pitch": 60
+},
+{
+"tone": "A15",
+"duration": 325,
+"pitch": 60
+},
+{
+"tone": "B15",
+"duration": 275,
+"pitch": 60
+}
+]
+}
 
 instrumentFiles = {
     "Electric Guitar": {variable: '_tone_0270_Chaos_sf2_file', url: 'https://surikov.github.io/webaudiofontdata/sound/0270_Chaos_sf2_file.js', title: 'Electric Guitar (clean): Guitar', pitch: -1},

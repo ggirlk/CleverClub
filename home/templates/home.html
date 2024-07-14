@@ -53,12 +53,15 @@
 
         }
         #about-section {
+            /* margin-top: 90px; */
             background-color: rgba(31, 97, 251, 0.3);
             /* background-color: rgb(255, 255, 255, 0.15); */
             /* background-color: rgba(115, 122, 242, 0.15); */
 
         }
         nav {
+            /* width: 100%; */
+            /* position: fixed;; */
             /* margin-bottom: 2px; */
             border-bottom: rgba(243,220,208,0.2) solid 2px;
         }
@@ -152,7 +155,7 @@
             50% { border-color: orange; }
         }
         #cards-section {
-            width: 85%;
+            width: 87%;
             margin: auto;
             margin-top: 50px;
             display: flex;
@@ -255,10 +258,20 @@
                 <a><img src="{% static '/imgs/Infinite Dream-logos_transparent0.png' %}" alt="logo"></a>
                 <!-- <p><a href="">Clever Club</a></p> -->
             </div>
+
             <div id="top-left-menu">
                 <ul>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Register</a></li>
+                    {% if user.is_authenticated %}
+                    <li><p>Hello, {{ user.username }}!</p>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+                    
                 </ul>
             </div>
         </nav>
