@@ -1,0 +1,289 @@
+body {
+    margin: 0;
+    /* overflow: hidden; */
+    /* height: 100vh; */
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+#spaceCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+header {
+    height: 250px;
+    background-image: url("../imgs/galaxy.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:bottom;
+}
+nav, nav ul, #cards-section {
+    display: flex;
+    justify-content: space-between;
+}
+nav ul li {
+    margin-right: 20px;
+    list-style-type: none;
+}
+nav {
+    /* background-color: rgba(100, 107, 234, 0.15); */
+
+}
+#about-section {
+    /* margin-top: 90px; */
+    background-color: rgba(31, 97, 251, 0.3);
+    box-shadow: 0px 3px 8px #F3DCD0;
+    /* background-color: rgb(255, 255, 255, 0.15); */
+    /* background-color: rgba(115, 122, 242, 0.15); */
+
+}
+nav {
+    /* width: 100%; */
+    /* position: fixed;; */
+    /* margin-bottom: 2px; */
+    border-bottom: rgba(243,220,208,0.2) solid 2px;
+}
+#logo img {
+    width: 100px;
+    height: 50px;
+    padding-left: 9px;
+}
+/* #logo, nav ul { */
+nav ul {
+    padding-top: 10px;
+}
+#logo {
+    padding: 5px;
+    /* padding-left: 20px; */
+    /* padding-left: 20px; */
+}
+#logo a, nav ul a {
+    text-decoration: none;
+    /* color: #db024a; */
+    color: #DD5A44;
+        /* #cf3e6f;  */
+    /* -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #F3DCD0 ; */
+    font-size: 1.2rem;
+    /* font-weight: bolder; */
+    font-family: "Roboto Slab", serif;
+    /* font-family: "Danfo", serif; */
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+    font-variation-settings:
+        "ELSH" 0;
+}
+#about-section h1 {
+    text-align: center;
+    font-size: 4rem;
+
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+
+    padding-top: 35px;
+    margin: 0px;
+    color: rgb(31, 97, 251);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
+    /* rgb(31, 46, 251) */
+    
+}
+#about-section p {
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 10px;
+    /* padding: 50px; */
+}
+
+.typewriter {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid orange; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation: 
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+    
+}
+.wrap {
+    padding: 5px;
+    /* background-color: #F3DCD0; */
+    color: rgb(31, 97, 251) #F3DCD0 ;
+        /* rgb(31, 97, 251); */
+}
+/* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+}
+#cards-section {
+    width: 87%;
+    margin: auto;
+    margin-top: 50px;
+    display: flex;
+    justify-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    /* perspective: 2000px; */
+}
+#cards-section .cards {
+    width: 290px;
+    /* height: 500px; */
+    height: 450px;
+    border-radius: 10px;
+    background-color: rgba(31, 97, 251, 0.3);
+    /* rgba(227, 198, 135, 0.3); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:center;
+    /* border: 1px groove #F3DCD0; */
+    margin: 10px;
+
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+
+}
+.card-front, .card-back {
+    width: 100%;
+    height: 100%;
+    border: 1px groove #F3DCD0;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #F3DCD0;
+
+}
+.card-back {
+    background-color: #F3DCD0;
+    background-image: url("/static/imgs/cadre.png");
+    background-size: contain;
+    background-position: center;
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: baseline;
+    
+}
+.card-back a {
+    color: inherit;
+    text-decoration: none;
+}
+.card-back h3, .card-back p {
+    width: 80%;
+    margin: 5px auto;
+    text-align: center;
+}
+.card-back h3 {
+    color: rgb(30, 30, 43);
+    text-transform: uppercase;
+}
+.card-back p {
+    color: rgb(51, 46, 46);
+}
+#cards-section .cards:hover {
+    transform: rotateY(180deg);
+    cursor: pointer;
+
+}
+
+#cards-section .cards h2 {
+    background-color: #F3DCD0  ;
+        /* rgb(209, 56, 0) rgba(31,97,251,0.6) rgba(221,90,68,0.6); */
+    padding-top: 5%;
+    padding-bottom: 1%;
+    text-align: center;
+}
+#cards-section .cards h2 a {
+    color: rgb(31, 97, 251) ;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+button {
+    background-color: inherit;
+    padding: 5px 9px;
+    border: 1px groove #F3DCD0;
+    border-radius: 5px;
+    color: #DD5A44;
+}
+button:hover {
+    cursor: pointer;
+    background-color: #F3DCD0;
+    color: #DD5A44;
+}
+/* 
+#cards-section .cards.music-card {
+    background-image: url("{% static '/imgs/music0.png' %}");
+    background-size: cover;
+}
+#cards-section .cards.computing-card {
+    background-image: url("{% static '/imgs/computing.png' %}");
+    background-size: 220%;
+}
+
+#cards-section .cards.puzzle-card {
+    background-image: url("{% static '/imgs/puzzle.png' %}");
+    background-size: contain;
+}
+#cards-section .cards.manga-card {
+    background-image: url("{% static '/imgs/manga.png' %}");
+}
+#cards-section .cards.maths-card {
+    background-image: url("{% static '/imgs/maths.png' %}");
+}
+#cards-section .cards.physics-card {
+    background-image: url("{% static '/imgs/physics.png' %}");
+    background-size: contain;
+}
+#cards-section .cards.chemistry-card {
+    background-image: url("{% static '/imgs/chemistry.png' %}");
+    background-size: contain;
+}
+#cards-section .cards.biology-card {
+    background-image: url("{% static '/imgs/biology.png' %}");
+    background-size: contain;
+}
+#cards-section .cards.technology-card {
+    background-image: url("{% static '/imgs/technology.png' %}");
+    background-size: 190%;
+}
+#cards-section .cards.language-card {
+    background-image: url("{% static '/imgs/language.png' %}");
+    background-size: contain;
+}
+#cards-section .cards.drawing-card {
+    background-image: url("{% static 'imgs/drawing.png' %}");
+    background-size: 135%;
+}
+#cards-section .cards.stories-card {
+    background-image: url("{% static 'imgs/stories.png' %}");
+    background-size: 130%;
+} */
+footer {
+    height: 50px;
+    text-align: right;
+    background-color: rgba(31, 97, 251, 0.25);
+    margin-top: 40px;
+    padding: 10px 10px 3px 0px;
+    color: #F3DCD0;
+    box-shadow: 0px 0px 4px #F3DCD0;
+}
+footer a {
+    text-decoration: none;
+    color: #F3DCD0;
+}

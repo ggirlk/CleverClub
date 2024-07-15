@@ -1,0 +1,24 @@
+{% load static %}
+<header>
+    <nav>
+        <div id="logo">
+            <a><img src="{% static '/imgs/Infinite Dream-logos_transparent0.png' %}" alt="logo"></a>
+            <!-- <p><a href="">Clever Club</a></p> -->
+        </div>
+
+        {% include 'home_page_menu.html' %}
+    </nav>
+    <div id="about-section">
+        <div>
+            <h1>Welcome to the AI Galaxy!</h1>
+            <p class="typewrite" data-period="8000" 
+            data-type='[ "Our platform is where education and entertainment come together!", 
+            "Our mission is to make learning fun and effective by enhancing creativity, imagination, and analyzing skills.", 
+            "Assisted by advanced AI, we provide personalized and innovative resources and interactive tools for students, teachers, and curious minds alike.", 
+            "Join us on this exciting journey to make education enjoyable and accessible for all!" 
+            ]'>
+                <span class="wrap"></span>
+            </p>
+        </div>    
+    </div>
+</header>

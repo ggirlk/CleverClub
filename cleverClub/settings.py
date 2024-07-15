@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     'musicStudio',
     'custom_admin',
     'sections',
-    # 'ckeditor5',
-    # 'ckeditor_uploader',
     'django_ckeditor_5'
 ]
 
@@ -65,7 +63,10 @@ ROOT_URLCONF = 'cleverClub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "custom_admin/templates"),],
+        'DIRS': [
+                os.path.join(BASE_DIR, "cleverClub/templates"), 
+                os.path.join(BASE_DIR, "custom_admin/templates"),
+                ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,6 +139,9 @@ DATE_FORMAT = "Y-m-d, H:m:s"
 
 STATIC_URL = 'static/'
 
+# python manage.py collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.CustomUser'
@@ -146,7 +150,8 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 STATICFILES_DIRS = [
-    'static/'
+    os.path.join(BASE_DIR, 'cleverClub/static'),
+    os.path.join(BASE_DIR, 'home/static')
 ]
 
 MEDIA_URL = '/media/'
@@ -184,7 +189,7 @@ customColorPalette = [
     ]
 
 # CKCKEDITOR_5_CUSTOM_CSS = 'css/ckeditor5/admin_dark_mode_fix.css'
-CKCKEDITOR_5_CUSTOM_CSS = 'static/css/night-mode.css' # optional
+CKCKEDITOR_5_CUSTOM_CSS =  os.path.join(BASE_DIR, 'css/night-mode.css')  # optional
 # # CKEDITOR_5_FILE_STORAGE = "path_to_storage.CustomStorage" # optional
 
 # CKEDITOR_5_CONFIGS = {

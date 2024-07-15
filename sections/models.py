@@ -22,16 +22,11 @@ class Section(models.Model) :
 
 
 class Category(models.Model) :
-    LEVELS = (
-        ('Beginner', _('Beginner')),
-        ('Medium', _('Medium')),
-        ('Advanced', _('Advanced')),
-    )
-    title =  models.CharField(max_length=30)
-    tagId = models.CharField(max_length=30)
-    picture =  models.ImageField(upload_to='imgs/uploads/categories/%Y/')
+
+    title =  models.CharField(max_length=100)
+    # tagId = models.CharField(max_length=30)
+    # picture =  models.ImageField(upload_to='imgs/uploads/categories/%Y/')
     description =  models.TextField()
-    level = models.CharField(max_length=30, choices=LEVELS)
     section = models.ForeignKey("Section", on_delete=models.CASCADE)
     admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_category', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
