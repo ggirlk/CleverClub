@@ -47,7 +47,7 @@ class Category(models.Model) :
         ordering = ["title"]
 
     def contents(self):
-        return self.category_set.all()
+        return self.content_set.all()
     
     def __str__(self):
         contents = self.contents()
@@ -87,11 +87,11 @@ class Content(models.Model) :
     class Meta:
         ordering = ["title"]
 
-    def contents(self):
-        return self.content_set.all()
+    def excercices(self):
+        return self.exercice_set.all()
     
     def __str__(self):
-        contents = self.contents()
+        exercices = self.exercices()
         return f"{self.title}, {self.updated_at}"
 
 
