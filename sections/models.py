@@ -15,9 +15,19 @@ class Section(models.Model) :
     admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_section', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
     is_published = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ["title"]
+    
+    def categories(self):
+        """ return related """
+        return self.category_set.all()
+
+
     def __str__(self):
+        categories = self.categories() # get related
         return f"{self.title}, {self.updated_at}"
 
 
@@ -32,8 +42,15 @@ class Category(models.Model) :
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["title"]
+
+    def contents(self):
+        return self.category_set.all()
     
     def __str__(self):
+        contents = self.contents()
         return f"{self.title} ,{self.updated_at}"
 
 class Content(models.Model) :
@@ -66,8 +83,15 @@ class Content(models.Model) :
         """ Generate content"""
         gem = GenerateAnything()
         return gem.callgemini(prompt)
+    
+    class Meta:
+        ordering = ["title"]
 
+    def contents(self):
+        return self.content_set.all()
+    
     def __str__(self):
+        contents = self.contents()
         return f"{self.title}, {self.updated_at}"
 
 
@@ -91,25 +115,43 @@ class Exercices(models.Model):
         ('Medium', _('Medium')),
         ('Advanced', _('Advanced')),
     ) 
-    section = models.ForeignKey("Section", on_delete=models.CASCADE)
-    category = models.ForeignKey("Category", on_delete=models.CASCADE, null=True)
-    content = models.ForeignKey("Content", on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=30, default="Exercice") # exce number + name
+    content = models.ForeignKey("Content", on_delete=models.CASCADE, null=True) # the exercice can belong to a content or can be general
 
     admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_exercice', on_delete=models.CASCADE)
-    level = models.CharField(max_length=30, choices=LEVELS)
-    choices = models.ForeignKey("ExerciceChoices", on_delete=models.CASCADE, null=True)
-    answer = models.CharField(max_length=2048)
+    level = models.CharField(max_length=30, choices=LEVELS, null=True)
+    question = models.TextField(null=True)
+    answer = models.TextField(null=True)
     pictures = models.ForeignKey("Pictures", on_delete=models.CASCADE, null=True)
     is_published = models.BooleanField(default=False)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ["name"]
+
+    def choices(self):
+        return self.exercicechoices_set.all()
+    
+    def __str__(self):
+        choices = self.choices()
+        return f"{self.name}"
+
+
 class ExerciceChoices(models.Model):
-    choice = models.CharField(max_length=512)
-    answer = models.CharField(max_length=512) # True / False or Text
+    exercice = models.ForeignKey("Exercices", on_delete=models.CASCADE, null=True) 
+    name = models.CharField(max_length=30, null=True)
+    choice = models.TextField(null=True)
+    answer = models.TextField(null=True) # True / False or Text
+
+    picture = models.ForeignKey("Exercices", related_name='exercice_picture', on_delete=models.CASCADE, null=True) # a choice
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.choice}"
+
 
 class Pictures(models.Model):
     TYPES = (
@@ -120,20 +162,20 @@ class Pictures(models.Model):
     pictureType = models.CharField(max_length=100, choices=TYPES)
     picture = models.ImageField(upload_to='imgs/uploads/contents/%Y/')
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)    
 
 class UserProgress(models.Model) :
-    section = models.ForeignKey("Section", on_delete=models.CASCADE)
-    category = models.ForeignKey("Category", on_delete=models.CASCADE)
     content = models.ForeignKey("Content", on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_progress', on_delete=models.CASCADE)
-    page = models.CharField(max_length=30)
+    done = models.BooleanField(default=False)
+    page = models.CharField(max_length=30) # link to the page
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class UserExcerciceGrade(models.Model) :
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_grade', on_delete=models.CASCADE)
     exercice = models.ForeignKey("Exercices", on_delete=models.CASCADE)
+    done = models.BooleanField(default=False)
     trial = models.IntegerField()
     grade = models.DecimalField(max_digits=3, decimal_places=3)
 

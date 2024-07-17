@@ -1,0 +1,14 @@
+{% for section in getSections %}
+
+{{ section.title }}
+<br>
+
+{% for category in section.categories %}
+*** {{ category.title }}
+<br>
+
+{% endfor %}
+{% endfor %}
+
+
+

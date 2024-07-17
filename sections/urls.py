@@ -5,5 +5,6 @@ app_name="sections"
 
 urlpatterns = [
     # path('studio', views.studio, name='studio'),
+    path('categories', views.CategoryPage, name='categories'),
    
 ]

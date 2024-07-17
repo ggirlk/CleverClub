@@ -25,7 +25,8 @@ urlpatterns = [
     path('', include('custom_admin.urls')),
     path('', include('user.urls', namespace="user")),
     path('', include('home.urls')),
-    path('', include('musicStudio.urls'))
+    path('', include('musicStudio.urls')),
+    path('', include('sections.urls'))
 ]
 
 urlpatterns += [
