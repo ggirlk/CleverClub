@@ -51,7 +51,7 @@ class Category(models.Model) :
     
     def __str__(self):
         contents = self.contents()
-        return f"{self.title} ,{self.updated_at}"
+        return f"{self.section.title}: {self.title}"# ,{self.updated_at}"
 
 class Content(models.Model) :
     TYPES = (
