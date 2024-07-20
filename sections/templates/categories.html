@@ -1,3 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+        
+    {% include 'top-navbar.html' %}
+
+
 {% for section in getSections %}
 
 {{ section.title }}
@@ -9,6 +17,8 @@
 
 {% endfor %}
 {% endfor %}
+
+{% endblock %}
 
 
 

@@ -1,17 +1,29 @@
 <div id="top-left-menu">
-    <ul>
+    
         {% if user.is_authenticated %}
-        <li>
-            <a href="#"><span>Hello {{ user.username }}!</span></a>
-        </li>
-        <li>
-            <form method="post" action="{% url 'user:logout' %}">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form></li>
+        <div id="btn-user-menu"><button id="icon-user-menu"><i class="fa fa-user"></i></button></div>
+        <div id="user-menu">
+            <ul >
+                <li>
+                    <a href="#">Hello {{ user.username }}!</a>
+                </li>
+                <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
+                <li><a href="#"><i class="fa fa-book"></i> My Courses</a></li>
+                <li><a href="#"><i class="fa fa-chart-line"></i> My Progress</a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                <li>
+                <form method="post" action="{% url 'user:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form></li>
+            </ul>
+        </div>
         {% else %}
-        <li><a href="{% url 'user:login' %}">Login</a></li>
-        <li><a href="{% url 'user:register' %}">Register</a></li>
+        <ul>
+            <li><a href="{% url 'user:login' %}">Login</a></li>
+            <li><a href="{% url 'user:register' %}">Register</a></li>
+        </ul>
         {% endif %}
-    </ul>
+    
 </div>
+
