@@ -69,7 +69,7 @@ class Content(models.Model) :
     contentType = models.CharField(max_length=30, verbose_name="Content Type", choices=TYPES, default="Course")
     contentFile =  models.CharField(max_length=30)
     description =  models.TextField()
-    section = models.ForeignKey("Section", on_delete=models.CASCADE)
+    # section = models.ForeignKey("Section", on_delete=models.CASCADE)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_content', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
