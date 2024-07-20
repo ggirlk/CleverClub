@@ -14,25 +14,37 @@ class CategoryAdmin(admin.ModelAdmin):
     # form = CategoryForm
     pass
 
+class ContentForm(forms.ModelForm):
+    generate = forms.BooleanField(required=False) # try to add a fied to the form
+
+    class Meta:
+        model = Content
+        fields = '__all__'
+
 @admin.register(Content)
 class ContentAdmin(admin.ModelAdmin):
+    form = ContentForm
+    form.base_fields['generate'].initial = False
+    #form = Content 
+
     def save_model(self, request, obj, form, change):
         prompt =""" 
                     {
-                    "description": "Generate a """+ obj.contentType +""" that follows the prompt details, the course can contain images, links code sections, any specialchars or symbols",
+                    "description": "Generate a """+ obj.contentType +""" that follows the prompt details, the course can contain well linked existing images, links code sections, any specialchars or symbols",
                     "prompt_details": {
-                        "Section": """+ obj.section.title  +""",
+                        "Section": """+ obj.category.section.title  +""",
                         "Category": """+ obj.category.title  +""",
                         "description": """+ obj.description +"""
                         "level": """+ obj.level  +""",
                         "length": "Medium",
                         "audience": "kids and teenagers",
-                        "output_format": "html"
+                        "output_format": "well formatted html"
                     }
                     }
                  """
-        #if not obj.text:
-        obj.text = obj.fillContents(prompt)
+
+        if obj.text == "<p>&nbsp;</p>" or form['generate'].value() == True:
+            obj.text = obj.fillContents(prompt)
         obj.save()
    
 @admin.register(Enrolments)

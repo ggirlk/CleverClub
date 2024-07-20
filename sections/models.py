@@ -27,7 +27,8 @@ class Section(models.Model) :
 
 
     def __str__(self):
-        categories = self.categories() # get related
+        if len(self.categories()) > 0: # so that we don't have value issues when adding
+            categories = self.categories() # get related
         return f"{self.title}, {self.updated_at}"
 
 
@@ -50,7 +51,8 @@ class Category(models.Model) :
         return self.content_set.all()
     
     def __str__(self):
-        contents = self.contents()
+        if len(self.contents()) > 0:
+            contents = self.contents()
         return f"{self.section.title}: {self.title}"# ,{self.updated_at}"
 
 class Content(models.Model) :
@@ -74,7 +76,7 @@ class Content(models.Model) :
     admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_content', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    pictures = models.ForeignKey("Pictures", on_delete=models.CASCADE, null=True)
+    pictures = models.ForeignKey("Pictures", on_delete=models.CASCADE, null=True, blank=True)
     level = models.CharField(max_length=30, choices=LEVELS)
     text = CKEditor5Field(blank=True,null=True)
     is_published = models.BooleanField(default=False, verbose_name="Publish Content?")
@@ -87,11 +89,12 @@ class Content(models.Model) :
     class Meta:
         ordering = ["title"]
 
-    def excercices(self):
-        return self.exercice_set.all()
+    def exercices(self):
+        return self.exercices_set.all()
     
     def __str__(self):
-        exercices = self.exercices()
+        if len(self.exercices()) > 0:
+            exercices = self.exercices()
         return f"{self.title}, {self.updated_at}"
 
 
@@ -135,7 +138,8 @@ class Exercices(models.Model):
         return self.exercicechoices_set.all()
     
     def __str__(self):
-        choices = self.choices()
+        if len(self.choices()) > 0:
+            choices = self.choices()
         return f"{self.name}"
 
 
