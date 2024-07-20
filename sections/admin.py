@@ -15,7 +15,7 @@ class CategoryAdmin(admin.ModelAdmin):
     pass
 
 class ContentForm(forms.ModelForm):
-    generate = forms.BooleanField(required=False) # try to add a fied to the form
+    generate = forms.BooleanField(required=False, help_text="Generate content using AI?") # try to add a fied to the form
 
     class Meta:
         model = Content
@@ -30,16 +30,17 @@ class ContentAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         prompt =""" 
                     {
-                    "description": "Generate a """+ obj.contentType +""" that follows the prompt details, the course can contain well linked existing images, links code sections, any specialchars or symbols",
-                    "prompt_details": {
+                     "description": "Generate a """+ obj.contentType +""" that follows the prompt details, the course can contain well linked existing images, links code sections, any specialchars or symbols",
+                     "prompt_details": {
                         "Section": """+ obj.category.section.title  +""",
                         "Category": """+ obj.category.title  +""",
+                        "title": """+ obj.title +"""
                         "description": """+ obj.description +"""
                         "level": """+ obj.level  +""",
                         "length": "Medium",
                         "audience": "kids and teenagers",
                         "output_format": "well formatted html"
-                    }
+                     }
                     }
                  """
 

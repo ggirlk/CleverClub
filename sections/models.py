@@ -19,7 +19,7 @@ class Section(models.Model) :
     is_published = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["id"]
     
     def categories(self):
         """ return related """
