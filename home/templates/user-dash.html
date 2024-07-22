@@ -1,0 +1,177 @@
+
+{% block extrastyle %}
+<style>
+    #user-dash {
+        position: relative;
+        height: 270px;
+        /* height: 400px; rgb(31, 97, 251)*/
+        background-image: url("media/imgs/spaceship3-.png");
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: 100%;
+        margin-bottom: 3%;
+        padding: 2%;
+        box-sizing: border-box;
+
+        /* box-shadow: 0px 3px 8px #F3DCD0; */
+
+    }
+    #user-dash::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            /* background: rgba(255, 255, 255, 0.5); rgba(16, 55, 146, 0.3) */
+    }
+    #user-dash::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(31, 97, 251, 0.2);
+            /* background: rgba(255, 255, 255, 0.5); */
+    }
+    #user-dash h2 {
+        position: relative;         
+        z-index: 1;
+
+        margin: 0;
+        font-size: 2.5rem;
+        text-align: center;
+        color: white;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: rgb(31, 97, 251);
+        
+    }
+    /* #user-dash h2, #user-dash .title {
+        
+    } */
+    #user-dash .title {
+        color: #F3DCD0  ;
+         /* rgb(112, 151, 244); */
+        font-size: 1.4rem;
+        /* color: white;  */
+        width: 100%;
+        /* height: 50px; #DD5A44 */
+        margin: 0;
+        /* padding: 19px; */
+        height: 80px;
+        padding-top: 20px;
+        font-weight: bold;
+        box-sizing: border-box;
+        background-color: rgb(219,144,19);
+         /* #F3DCD0; */
+        border-bottom: 10px ridge rgb(112, 151, 244);
+        border-radius: 10px 0 0 0;
+        vertical-align: center;
+        text-align: center;
+        /* rgb(31, 97, 251); */
+        /* -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: rgb(112, 151, 244); */
+    }
+    #user-dash-elements {
+        position: relative;         
+        z-index: 1;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 2%;
+        padding-bottom: 15px;
+    }
+    .elements {
+        width: 70%;
+        padding: 0%;
+        /* border-right: 3px solid #DD5A44 ; */
+        box-sizing: border-box;
+        
+
+         /* rgb(112, 151, 244); #DD5A44 */
+    }
+    .elements p {
+        margin: 0;
+        padding: 9px;
+        /* padding-bottom:  17px; */
+        box-sizing: border-box;
+        /* background-color: rgb(112, 151, 244); */
+        text-align: right;
+        font-weight: bold;
+    }
+    .dash-card {
+        width: 25%;
+        height: 140px;
+        background-color:rgb(10,32,73);
+        /* background-color:  #F3DCD0; */
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 10px;
+  
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        box-shadow: 0px 0px 4px #F3DCD0;
+        border: 1px solid #F3DCD0;
+    }
+    .dash-card .p-fa {
+        text-align: center;
+        margin: 0;
+        width: 30%;
+        /* height: 100%; */
+        background-color:  rgb(112, 151, 244);
+        /* padding: 12px; */
+        padding: 1%;
+        height: 124px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0 10px 10px 0;
+        /* border:  3px solid #c3aca1b3; */
+    }
+    /* rgb(154, 184, 255) */
+    .dash-card p i {
+        font-size: 4.3rem;
+        color:  rgb(219,144,19);
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: #F3DCD0 ;
+         /* rgb(31, 97, 251); */
+    }
+</style>
+
+{% endblock %}
+
+<div id="user-dash">
+    <div>
+        <h2>Welcome to your Spaceship!</h2>
+        <div id="user-dash-elements">
+            <div class="dash-card courses">
+                <div class="elements">
+                    <h3 class="title">My Courses</h3> 
+                    <p>0</p>
+                </div>
+                <p class="p-fa"><i class="fa fa-book"></i></p>
+            </div>
+            <div class="dash-card progress">
+                
+                <div class="elements">
+                    <h3 class="title">My Progress</h3> 
+                    <p>0</p>
+                </div>
+                <p class="p-fa"><i class="fa fa-chart-line"></i></p>
+            </div>
+            <div class="dash-card puzzles">
+                <div class="elements">
+                    <h3 class="title">Solved Puzzles</h3> 
+                    <p>0</p>
+                </div>
+                <p class="p-fa"><i class="fa fa-dice"></i></p>
+            </div>
+        </div>
+    </div>
+</div>
+
