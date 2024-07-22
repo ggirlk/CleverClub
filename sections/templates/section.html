@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ getSection.title }}
+{% endblock %}
+
+{% block extrastyle %}
+<style>
+    .section-contents {
+        width: 85%;
+        margin: auto;
+        margin-top: 3%;
+        font-family: Arial, sans-serif;
+        border-radius: 10px;
+        /* background-color: cornflowerblue; */
+        background-color: #F3DCD0 ;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .section-contents .contents {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+    }
+    .section-picture {
+        margin-right: 3%;
+    }
+    .section-details {
+        
+    }
+    .level {
+        padding: 2px 5px;
+        border-radius: 5px;
+        font-size: 0.6rem;
+    }
+    .Beginner {
+        background-color: lightgreen;
+    }
+    .Medium {
+        background-color: lightyellow;
+    }
+    .Advanced {
+        background-color: lightcoral;
+    }
+    .category-contents li {
+        /* font-size: 0.9rem; */
+    }
+    .category-contents a {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+</style>
+
+{% if getSection.title == "Computing Section" %}
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    /* height: 100%; */
+    /* overflow: hidden; */
+    background-color: black;
+    /* color: #00ff00; */
+    font-family: 'Courier New', Courier, monospace;
+}
+canvas {
+    display: block;
+}
+.matrix-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.section-contents {
+    background-color: #F3DCD0 ;
+    /* rgba(100, 148, 237, 0.819); */
+}
+</style>
+{% endif %}
+
+
+{% endblock %}
+
+{% block content %}
+        
+{% include 'top-navbar.html' %}
+
+{% if getSection.title == "Computing Section" %}
+<canvas id="matrix"></canvas>
+{% endif %}
+
+<section class="section-contents matrix-content ">
+    <div class="contents">
+        <div class="section-picture"><img src="/media/{{ getSection.picture }}" width="300px" height="370px" alt="{{ getSection.title }}"/></div>
+        <div class="section-details">
+            <div>
+                <h2>{{ getSection.title }}</h2>
+                <p>{{ getSection.description }}</p>
+            </div>
+            <div>
+                <div>
+                    <h3>Section Contents</h3>
+                </div>
+                {% for category in getSection.categories %}
+                <ul class="category-contents"><h4>{{ category.title }}</h4>
+                    <li>
+                    {% for content in category.contents %}
+                        <a href="#"><h5>{{ content.title }} <span class="level {{ content.level }}">{{ content.level }}</span></h5> </a> 
+                        <div class="content-details">
+                            <p> {{ content.description }}  </p>
+                        </div>
+                    {% endfor %}
+                    </li>
+                </ul> 
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script>                                                                          
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+console.log(canvas)
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+
+const drops = Array.from({ length: columns }, () => 1);
+
+function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle =  '#DD5A44'; //'#00ff00';
+    ctx.font = `${fontSize}px arial`;
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+
+        drops[i]++;
+    }
+}
+
+setInterval(draw, 33);
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+</script>
+
+<script type="text/javascript" src="{% static '/js/matrix.js' %}"></script>
+{% endblock %}
+
+
+
