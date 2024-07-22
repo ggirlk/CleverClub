@@ -3,6 +3,7 @@
 {% block title %}Home{% endblock %}
 
     {% load static %}
+    {% load custom_filters %}
    
     {% block extrastyle %}
     <link href="{% static 'css/home_page.css' %}" rel="stylesheet">
@@ -19,21 +20,19 @@
         
         <div class="cards {{ section.tagId }}" style="background-image: url('media/{{ section.picture }}');">
             <div class="card-front">
-                <h2><a href="{% url 'musicStudio:studio' %}">{{ section.title }}</a></h2>
+                <h2><a href="{% url 'sections:section' section.id %}">{{ section.title }}</a></h2>
             </div>
             <div class="card-back">
-                <a href="{% url 'musicStudio:studio' %}">
+                <a href="{% url 'sections:section' section.id %}">
                     <h3>Description</h3>
-                    <p>{{ section.description }}</p>
+                    <p> {{ section.description|truncate_description:270 }}</p>
                 </a>
             </div>
         </div>
         {% endfor %}
         
     </section>
-    <footer>
-        <p>Made by <a href="https://www.linkedin.com/in/1128khouloud/">Khouloud</a> &copy;2024</p>
-    </footer>
+    
 
     <script>
 

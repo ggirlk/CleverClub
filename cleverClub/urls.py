@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from . import views
 #from .import views /admin/customuser/add/
 
 urlpatterns = [
@@ -26,7 +26,8 @@ urlpatterns = [
     path('', include('user.urls', namespace="user")),
     path('', include('home.urls')),
     path('', include('musicStudio.urls')),
-    path('', include('sections.urls'))
+    path('', include('sections.urls')),
+    path('trigger-404/', views.trigger_404),
 ]
 
 urlpatterns += [

@@ -1,6 +1,8 @@
 <header>
     {% include 'top-navbar.html' %}
-    
+    {% if user.is_authenticated %}
+        {% include 'user-dash.html' %}
+    {% else %}
     <div id="about-section">
         <div>
             <h1>Welcome to the AI Galaxy!</h1>
@@ -14,4 +16,5 @@
             </p>
         </div>    
     </div>
+    {% endif %}
 </header>

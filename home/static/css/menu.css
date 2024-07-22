@@ -51,6 +51,18 @@ nav ul {
     text-align: center;
     padding-top: 15px;
 }
+button {
+    background-color: inherit;
+    padding: 5px 9px;
+    border: 1px groove #F3DCD0;
+    border-radius: 5px;
+    color: #DD5A44;
+}
+button:hover {
+    cursor: pointer;
+    background-color: #F3DCD0;
+    color: #DD5A44;
+}
 #icon-user-menu {
     width: 40px;
     height: 40px;
@@ -61,18 +73,19 @@ nav ul {
     border: none;
     font-size: 1.5rem;
     background-color: #F3DCD0;
-    
+    color: #DD5A44;
 }
 
 #user-menu {
     display: none;
     position: absolute;
+    z-index: 999;
     /* margin-top: 35px; rgba(31, 97, 251, 0.3); */
     background-color: #F3DCD0;
     width: 120px;
     border-radius: 10px;
     box-shadow: 0px 3px 8px #F3DCD0;
-    border: 1px solid rgba(31, 97, 251, 1);
+    border: 1px solid rgb(112, 151, 244);
 
 }
 #user-menu ul {
@@ -89,7 +102,8 @@ nav ul {
     padding: 5px 5px 5px 5px;
     /* margin-left: 5px; */
     width: 100%;
-    border-bottom: 1px solid rgba(31, 97, 251, 1);
+    border-bottom: 1px solid rgb(112, 151, 244);
+     /* rgba(31, 97, 251, 1); */
     box-sizing: border-box;
     /* padding-bottom: 5px;   #F3DCD0*/
 }

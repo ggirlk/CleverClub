@@ -26,10 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'd-n=qjow1k_q@%7o*4h-$+_wb#9+5np$c161^=kp=jj0q56#%o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 # Application definition
 
@@ -81,7 +80,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cleverClub.wsgi.application'
 
+STATIC_URL = '/static/'
 
+# python manage.py collectstatic
+STATIC_ROOT = BASE_DIR / 'app/staticfile' #os.path.join(BASE_DIR, '/static')
+
+
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, 'cleverClub/static'),
+    # os.path.join(BASE_DIR, 'home/static')
+    BASE_DIR / 'static'
+]
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -137,10 +146,7 @@ DATE_FORMAT = "Y-m-d, H:m:s"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = 'static/'
 
-# python manage.py collectstatic
-STATIC_ROOT = os.path.join(BASE_DIR, '/static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -149,13 +155,9 @@ AUTH_USER_MODEL = 'user.CustomUser'
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'cleverClub/static'),
-    os.path.join(BASE_DIR, 'home/static')
-]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media')
 
 customColorPalette = [
         {
