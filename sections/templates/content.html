@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ getContent.title }}
+{% endblock %}
+
+{% block extrastyle %}
+<style>
+    body {
+        background-color: black;
+    }
+    .main {
+        min-height: 100vh;
+        padding-bottom: 40px;
+        /* background-color: rgb(1, 32, 56); */
+    }
+    #section-container {
+        display: flex;
+        margin-top: 1%;
+
+    }
+    .section-contents {
+        width: 80%;
+        min-height: 87vh;
+        margin: auto;
+        font-family: Arial, sans-serif;
+        border-radius: 10px;
+        /* background-color: cornflowerblue; */
+
+        background-color: #F3DCD0;
+        padding: 20px;
+        box-sizing: border-box;
+        /* flex: 1; */
+        box-shadow: 0px 0px 5px 5px gray;
+    }
+    .section-contents .contents {
+        width: 95%;
+        margin: auto;
+    }
+    .section-contents .contents input {
+        border: 1px intset rgb(187, 185, 183);
+        border-radius: 8px;
+        padding: 3px;
+    }
+    .level {
+        padding: 2px 5px;
+        border-radius: 5px;
+        font-size: 0.6rem;
+    }
+    .Beginner {
+        background-color: lightgreen;
+    }
+    .Medium {
+        background-color: lightyellow;
+    }
+    .Advanced {
+        background-color: lightcoral;
+    }
+
+    .sections-menu {
+        width: 20%;
+        /* display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; */
+    }
+    .sections-menu .sections-menu-elements {
+        padding: 10px;
+        display: block;
+        /* background-color: rgba(31, 97, 251, 0.25); */
+        /* background-color: aliceblue; */
+        margin: 5px;
+        box-shadow: 0px 0px 1px 2px gray;
+        /* height: 100px; */
+
+    }
+    .sections-menu .sections-menu-elements:hover {
+        background-color: #F3DCD0;
+    }
+    .sections-menu a {
+        text-decoration: none;
+        color: coral;
+
+    }
+    .active {
+        background-color: #F3DCD0;
+    }
+</style>
+
+
+{% endblock %}
+
+{% block main %}
+        
+{% include 'top-navbar.html' %}
+
+<section id="section-container">
+
+<div class="section-contents">
+    
+    <div class="contents">
+            <div>{{ getContent.text|safe }}</div>
+    </div>
+
+</div>
+<div class="sections-menu">
+    {% for content in getAllContents %}
+    <!--   content.category.section.id  -->
+    <a href="{% url 'sections:content' section_id category_name category_id content.id %}">
+        <span class="sections-menu-elements {% if getContent.id == content.id %} active {% endif %}">{{ content.title }} - {{ content.contentType }}</span>
+    </a>
+    
+    {% endfor %}
+</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<!-- <script type="text/javascript" src="{% static '/js/matrix.js' %}"></script> -->
+{% endblock %}
+
+
+
+

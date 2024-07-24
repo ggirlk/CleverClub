@@ -1,6 +1,11 @@
 from django.contrib import admin
 from .models import Section, Category, Content, Enrolments, Exercices, ExerciceChoices, Pictures, UserProgress, UserExcerciceGrade
 from django import forms
+import re
+import json
+from django.conf import settings
+import os
+from cleverClub.utils import GenerateAnything
 
 
 @admin.register(Section)
@@ -28,24 +33,44 @@ class ContentAdmin(admin.ModelAdmin):
     #form = Content 
 
     def save_model(self, request, obj, form, change):
-        prompt =""" 
-                    {
-                     "description": "Generate a """+ obj.contentType +""" that follows the prompt details, the course can contain well linked existing images, links code sections, any specialchars or symbols",
-                     "prompt_details": {
-                        "Section": """+ obj.category.section.title  +""",
-                        "Category": """+ obj.category.title  +""",
-                        "title": """+ obj.title +"""
-                        "description": """+ obj.description +"""
-                        "level": """+ obj.level  +""",
-                        "length": "Medium",
-                        "audience": "kids and teenagers",
-                        "output_format": "well formatted html"
-                     }
-                    }
-                 """
+        try:
+            if obj.text == "<p>&nbsp;</p>" or form['generate'].value() == True:
+                gem = GenerateAnything()
 
-        if obj.text == "<p>&nbsp;</p>" or form['generate'].value() == True:
-            obj.text = obj.fillContents(prompt)
+                prompt = gem.getPrompt(obj, obj.contentType)
+                
+                jsonContent = gem.callgemini(prompt)
+
+                print("generated json", jsonContent)
+  
+                html = ""
+                if (type(jsonContent) == str):
+                    jsonContent = json.loads(jsonContent)
+                keys = list(jsonContent.keys())
+                if keys[0] != "tags":
+                    jsonContent = jsonContent[keys[0]]
+                if "tags" in keys:
+                    jsonContent = jsonContent["tags"]
+                obj.json = jsonContent
+                # print(jsonContent)
+                for elem in jsonContent: # make this a stand alone function in utils
+                    print(elem)
+                    # print(elem['tag'], elem['innerText'], type(elem['innerText']))
+                    if type(elem['innerText']) == str:
+                        html += "<"+elem['tag']
+                        for attribute in list(elem.keys()):
+                            if attribute != 'innerText':
+                                html += " "+attribute+"="+elem[attribute]
+                        html += ">"+elem['innerText']+"</"+elem['tag']+">"
+
+                    if type(elem['innerText']) == list:
+                        for li in elem['innerText']:
+                            html += "<"+li['tag']+">"+li['innerText']+"</"+li['tag']+">"
+                obj.text = html  
+                print("html", html)
+        except:
+            raise
+                
         obj.save()
    
 @admin.register(Enrolments)

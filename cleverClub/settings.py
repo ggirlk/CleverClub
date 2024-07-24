@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'd-n=qjow1k_q@%7o*4h-$+_wb#9+5np$c161^=kp=jj0q56#%o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
@@ -80,15 +80,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cleverClub.wsgi.application'
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # python manage.py collectstatic
-STATIC_ROOT = BASE_DIR / 'app/staticfile' #os.path.join(BASE_DIR, '/static')
+STATIC_ROOT = BASE_DIR / 'staticfiles' #os.path.join(BASE_DIR, '/static')
 
 
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, 'cleverClub/static'),
-    # os.path.join(BASE_DIR, 'home/static')
     BASE_DIR / 'static'
 ]
 # Database

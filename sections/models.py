@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from cleverClub.utils import GenerateAnything
+# from cleverClub.utils import GenerateAnything
 from django.utils.translation import gettext_lazy as _
 
 from django_ckeditor_5.fields import CKEditor5Field
@@ -11,7 +11,7 @@ class Section(models.Model) :
     picture = models.ImageField(upload_to='imgs/uploads/sections/%Y/')
     tagId = models.CharField(max_length=30)
     description = models.TextField()
-     # who created it
+    # admin who created it
     admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_section', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -57,19 +57,19 @@ class Category(models.Model) :
 
 class Content(models.Model) :
     TYPES = (
-        ('Course', 'Course'),
-        ('Puzzle', 'Puzzle'),
-        ('Story', 'Story'),
-        ('Manga', 'Manga'),
+        ('Course', _('Course')),
+        ('Puzzle', _('Puzzle')),
+        ('Story', _('Story')),
+        ('Manga', _('Manga')),
     )
     LEVELS = (
         ('Beginner', _('Beginner')),
         ('Medium', _('Medium')),
         ('Advanced', _('Advanced')),
     )
+    # help(CKEditor5Field)
     title =  models.CharField(max_length=30)
     contentType = models.CharField(max_length=30, verbose_name="Content Type", choices=TYPES, default="Course")
-    contentFile =  models.CharField(max_length=30)
     description =  models.TextField()
     # section = models.ForeignKey("Section", on_delete=models.CASCADE)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
@@ -79,12 +79,13 @@ class Content(models.Model) :
     pictures = models.ForeignKey("Pictures", on_delete=models.CASCADE, null=True, blank=True)
     level = models.CharField(max_length=30, choices=LEVELS)
     text = CKEditor5Field(blank=True,null=True)
+    json = models.TextField(blank=True,null=True)
     is_published = models.BooleanField(default=False, verbose_name="Publish Content?")
 
-    def fillContents(self, prompt):
-        """ Generate content"""
-        gem = GenerateAnything()
-        return gem.callgemini(prompt)
+    # def fillContents(self, prompt):
+    #     """ Generate content"""
+    #     gem = GenerateAnything()
+    #     return gem.callgemini(prompt)
     
     class Meta:
         ordering = ["title"]

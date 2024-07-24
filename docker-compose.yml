@@ -18,7 +18,7 @@ services:
     volumes:
       - .:/app:rw #  Mark the app code as read-only in the container
       - staticfiles:/app/staticfiles:rw # Mount the named volume for static files
-      - mediafiles:/app/media:rw # Mount the named volume for media files
+      - media:/app/media:rw # Mount the named volume for media files
     ports:
       - "8000:8000"
     depends_on:
@@ -33,11 +33,11 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:rw # Mount Nginx config
       - staticfiles:/app/staticfiles:rw # Share static files volume
-      - mediafiles:/app/media:rw   # Share media files volume 
+      - media:/app/media:rw   # Share media files volume 
     depends_on:
       - web
 
 volumes:
   postgres_data:
-  staticfiles:  
-  mediafiles:
+  staticfiles:
+  media:

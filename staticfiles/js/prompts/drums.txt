@@ -1,0 +1,23 @@
+{
+  "prompt": {
+    "tempo": 120,
+    "time_signature": "2/4",
+    "style": "metal",
+    "feel": "syncopated_and_groovy",
+    "drums": ["BassDrum", "SnareDrum", "RideCymbal", "HighTom1", "MidTom1", "LowTom2", "HihatOpen", "HihatClosed", "Clap"],
+    "full_duration_in_seconds": 30
+  },
+  "output_format": {
+    "DrumsPart": {
+      "InstrumentName": [
+        {
+          "tone": "C",
+          "duration": 125,
+          "pitch": 36,
+          "offset": 0.0
+        }
+      ]
+    } 
+  }
+}
+
