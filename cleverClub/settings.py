@@ -330,6 +330,11 @@ all toolbars
 
 CKEDITOR_5_CONFIGS = {
     'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+
+    },
+    'admin': {
         'toolbar': {
             'items': [
                 'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'code', 'subscript', 'superscript', 'highlight', 'removeFormat', '|',
@@ -343,7 +348,9 @@ CKEDITOR_5_CONFIGS = {
                 'selectAll', 'horizontalLine', 'specialCharacters',
             ],
             'shouldNotGroupWhenFull': True,
+            
         },
+        'extraAllowedContent': 'input(*); button(*); script(*)[*]', 
         'fontColor': {
             'colors': customColorPalette,
 
@@ -377,7 +384,7 @@ CKEDITOR_5_CONFIGS = {
                 { 'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2' },
                 { 'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3' }
             ]
-        }
+        },
     },
     'list': {
         'properties': {

@@ -25,7 +25,6 @@ class Section(models.Model) :
         """ return related """
         return self.category_set.all()
 
-
     def __str__(self):
         if len(self.categories()) > 0: # so that we don't have value issues when adding
             categories = self.categories() # get related
@@ -45,7 +44,7 @@ class Category(models.Model) :
     is_published = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["id"]
 
     def contents(self):
         return self.content_set.all()
@@ -78,22 +77,18 @@ class Content(models.Model) :
     updated_at = models.DateTimeField(auto_now=True)
     pictures = models.ForeignKey("Pictures", on_delete=models.CASCADE, null=True, blank=True)
     level = models.CharField(max_length=30, choices=LEVELS)
-    text = CKEditor5Field(blank=True,null=True)
+    text = CKEditor5Field(blank=True,null=True, verbose_name="Content (if you want to edit a Puzzle only the json works!)", config_name='admin')
     json = models.TextField(blank=True,null=True)
     is_published = models.BooleanField(default=False, verbose_name="Publish Content?")
-
-    # def fillContents(self, prompt):
-    #     """ Generate content"""
-    #     gem = GenerateAnything()
-    #     return gem.callgemini(prompt)
     
     class Meta:
-        ordering = ["title"]
+        ordering = ["id"]
 
     def exercices(self):
         return self.exercices_set.all()
     
     def __str__(self):
+        # help(CKEditor5Field)
         if len(self.exercices()) > 0:
             exercices = self.exercices()
         return f"{self.title}, {self.updated_at}"

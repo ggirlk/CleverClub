@@ -30,48 +30,34 @@ class ContentForm(forms.ModelForm):
 class ContentAdmin(admin.ModelAdmin):
     form = ContentForm
     form.base_fields['generate'].initial = False
-    #form = Content 
 
     def save_model(self, request, obj, form, change):
+        gem = GenerateAnything()
+        # print(type(obj.json), obj.json)
         try:
-            if obj.text == "<p>&nbsp;</p>" or form['generate'].value() == True:
-                gem = GenerateAnything()
+            if form['generate'].value() == True:
 
                 prompt = gem.getPrompt(obj, obj.contentType)
                 
                 jsonContent = gem.callgemini(prompt)
 
-                print("generated json", jsonContent)
+                print("generated json", type(jsonContent), jsonContent)
   
-                html = ""
-                if (type(jsonContent) == str):
-                    jsonContent = json.loads(jsonContent)
-                keys = list(jsonContent.keys())
-                if keys[0] != "tags":
-                    jsonContent = jsonContent[keys[0]]
-                if "tags" in keys:
-                    jsonContent = jsonContent["tags"]
-                obj.json = jsonContent
-                # print(jsonContent)
-                for elem in jsonContent: # make this a stand alone function in utils
-                    print(elem)
-                    # print(elem['tag'], elem['innerText'], type(elem['innerText']))
-                    if type(elem['innerText']) == str:
-                        html += "<"+elem['tag']
-                        for attribute in list(elem.keys()):
-                            if attribute != 'innerText':
-                                html += " "+attribute+"="+elem[attribute]
-                        html += ">"+elem['innerText']+"</"+elem['tag']+">"
-
-                    if type(elem['innerText']) == list:
-                        for li in elem['innerText']:
-                            html += "<"+li['tag']+">"+li['innerText']+"</"+li['tag']+">"
-                obj.text = html  
+                html, jsonContent = gem.jsonToHTML(jsonContent)
+                            
+                obj.json = json.dumps(jsonContent)
+                obj.text = html
                 print("html", html)
+                obj.save()
+            else:
+                html, jsonContent = gem.jsonToHTML(obj.json)
+                obj.json = json.dumps(jsonContent)
+                obj.text = html  
+                obj.save()
+
         except:
             raise
                 
-        obj.save()
    
 @admin.register(Enrolments)
 class EnrolmentsAdmin(admin.ModelAdmin):

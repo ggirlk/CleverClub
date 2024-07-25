@@ -85,11 +85,10 @@ class GenerateAnything():
                             "tags": [
                                 {"tag": "h1", "innerText": "text"},
                                 {"tag": "h2", "innerText": "text"},
-                                // .....
-                                {"tag": "h6", "id": "question_i", "innerText": "text"},
+                                {"tag": "h3", "id": "question_i", "innerText": "text"},
                                 {"tag": "ul", "innerText": [
-                                    {"tag": "li", "innerText": "text"},
-                                    {"tag": "li", "innerText": "text"},
+                                    {"tag": "li", "data-choice": "a", "innerText": "a) - text"},
+                                    {"tag": "li", "data-choice": "b", "innerText": "b) - text"},
                                     // ..
                                                 ]},
                                 {"tag": "input", "type": "text", "id": "student-answer_i", "innerText": ""},          
@@ -97,13 +96,13 @@ class GenerateAnything():
                                 {"tag": "p", "innerText": "text"},
                                 {"tag": "a", "href": "link", "innerText": "text"},
                                 {"tag": "img", "src": "image_link", "alt":"picture title", "innerText": "text"},
-                                {"tag": "p", "id": "answer_i", "hidden": "True", "innerText": "text"},
+                                {"tag": "p", "id": "answer_i", "hidden": "True", "innerText": "the right choice"},
 
                                 {"tag": "script", "type": "text/javascript", 
                                     "innerText": "add inputs tags with each question dynamically
                                                     declare btn-question, 
                                                     define event on button click;
-                                                        get attribute data-question number and compare student-answer_i value with answer_i innerText value,
+                                                        get attribute data-question number and compare student-answer_i value (which should contain the choice a or b or c ..) with answer_i innerText value which should be the correct choice a or b or c ..,
                                                         if the values are alike push a success message else a sweet warning message to try again
                                                         using sweet alert (version 2.1.2) instead of classical alert to show messages
                                                         "
@@ -148,10 +147,37 @@ class GenerateAnything():
                         "length": "Medium",
                         "audience": "kids and teenagers",
                         "extra_notes": "use html icons from fontawesome or emojies when you can't refer to images, add the input tags using javascript",
-                        "important_note": "make sure to generate only the output json starting by {'tags' : [....]}",
+                        "important_note": "make sure to generate only the output json starting by {'tags' : [....]} and to add \ before each " so that we don't get parsing errors and make sure the json is valide",
                         "output_format": """+output_format+"""
                     }
                  """
         # need to fix prompts for all and fix the music generator page urgently
         return prompt
 
+    def jsonToHTML(self, jsonContent):
+        """  """
+        html = ""
+        if (type(jsonContent) == str):
+            jsonContent = json.loads(jsonContent.encode('utf-8'))
+
+        if type(jsonContent) != list:
+            keys = list(jsonContent.keys())
+            if keys[0] != "tags":
+                jsonContent = jsonContent[keys[0]]
+            if "tags" in keys:
+                jsonContent = jsonContent["tags"]
+        print(jsonContent)
+        for elem in jsonContent: 
+            print(elem)
+            # print(elem['tag'], elem['innerText'], type(elem['innerText']))
+            if type(elem['innerText']) == str:
+                html += "<"+elem['tag']
+                for attribute in list(elem.keys()):
+                    if attribute != 'innerText':
+                        html += " "+attribute+"="+elem[attribute]
+                html += ">"+elem['innerText']+"</"+elem['tag']+">"
+
+            if type(elem['innerText']) == list:
+                for li in elem['innerText']:
+                    html += "<"+li['tag']+">"+li['innerText']+"</"+li['tag']+">"
+        return html, jsonContent
