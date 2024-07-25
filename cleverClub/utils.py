@@ -79,7 +79,7 @@ class GenerateAnything():
                         }
                     }
                 """
-        elif contentType == "Puzzle":
+        else: # contentType == "Puzzle":
             output_format = """
                             {
                             "tags": [
@@ -112,28 +112,28 @@ class GenerateAnything():
                             ]
                             }
                             """
-        else:
-            output_format = """
-                            {
-                            "tags": [
-                                {"tag": "h1", "innerText": "text"},
-                                {"tag": "h2", "innerText": "text"},
-                                // .....
-                                {"tag": "h6", "innerText": "text"},
-                                {"tag": "ul", "innerText": [
-                                    {"tag": "li", "innerText": "text"},
-                                    {"tag": "li", "innerText": "text"},
-                                    // ..
-                                                ]},
-                                {"tag": "input", "type": "text", "id": "student-answer_i", "innerText": ""},          
-                                {"tag": "button", "class": "btn-question", "data-question": "i", "innerText": "Check my answer"},
-                                {"tag": "p", "innerText": "text"},
-                                {"tag": "a", "href": "link", "innerText": "text"},
-                                {"tag": "img", "src": "image_link", "alt":"picture title", "innerText": "text"},
-                                // ..
-                             ]
-                            }
-                            """
+        # else:
+        #     output_format = """
+        #                     {
+        #                     "tags": [
+        #                         {"tag": "h1", "innerText": "text"},
+        #                         {"tag": "h2", "innerText": "text"},
+        #                         // .....
+        #                         {"tag": "h6", "innerText": "text"},
+        #                         {"tag": "ul", "innerText": [
+        #                             {"tag": "li", "innerText": "text"},
+        #                             {"tag": "li", "innerText": "text"},
+        #                             // ..
+        #                                         ]},
+        #                         {"tag": "input", "type": "text", "id": "student-answer_i", "innerText": ""},          
+        #                         {"tag": "button", "class": "btn-question", "data-question": "i", "innerText": "Check my answer"},
+        #                         {"tag": "p", "innerText": "text"},
+        #                         {"tag": "a", "href": "link", "innerText": "text"},
+        #                         {"tag": "img", "src": "image_link", "alt":"picture title", "innerText": "text"},
+        #                         // ..
+        #                      ]
+        #                     }
+        #                     """
         prompt ="""{
                      "description": "Generate a """+ obj.contentType +""" that follows the prompt details, the """+ obj.contentType +""" can contain well linked existing images, links code sections, any specialchars or symbols, as a json make sure to follow the output format sample and combine as you need",
                      "prompt_details": {

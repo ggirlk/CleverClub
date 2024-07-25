@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from .models import Section, Category, Content, Enrolments, Exercices, ExerciceChoices, Pictures, UserProgress, UserExcerciceGrade
 from django import forms
 import re
@@ -55,10 +55,14 @@ class ContentAdmin(admin.ModelAdmin):
                 obj.text = html  
                 obj.save()
 
-        except:
-            raise
-                
-   
+            # except json.JSONEncoderError as e:
+            #     print(f"Error encoding JSON: {e}")
+            # self.message_user(request, f"The content “{obj.__str__}” was changed successfully. You may edit it again below.", level=messages.SUCCESS)
+        except Exception as e:
+            print(f"Error: {e}")
+            self.message_user(request, f'There was an error while saving please try again later! {str(e)}', level=messages.ERROR)
+
+
 @admin.register(Enrolments)
 class EnrolmentsAdmin(admin.ModelAdmin):
     pass

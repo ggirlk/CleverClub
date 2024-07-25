@@ -21,7 +21,7 @@
 
     }
     .section-contents {
-        width: 95%;
+        width: 88%;
         min-height: 87vh;
         margin: auto;
         font-family: Arial, sans-serif;
@@ -71,6 +71,7 @@
         color: black;
     }
     .sections-menu {
+        width: 12%;
         /* display: flex;
         justify-content: center;
         align-items: center;
@@ -96,6 +97,7 @@
     }
     .active {
         background-color: #F3DCD0;
+        color: rgb(194, 79, 59);
     }
     .contentType {
         padding: 5px;
@@ -108,35 +110,15 @@
 
         /* border-top-right-radius: 20px; */
     }
+    .extra-tools {
+        text-align: center;
+    }
+    .extra-tools a {
+        color: rgb(194, 79, 59);
+        text-decoration: none;
+    }
+    
 </style>
-
-{% if getSection.title == "Computing Section" %}
-<style>
-body, html {
-    /* margin: 0; */
-    /* padding: 0; */
-    /* height: 100%; */
-    /* overflow: hidden; */
-    /* background-color: rgb(1, 32, 56);/*black; */
-    /* color: #00ff00; */
-    /* font-family: 'Courier New', Courier, monospace; */
-}
-/* canvas {
-    display: block;
-} */
-/* .matrix-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-} */
-/* .section-contents {
-    background-color: #F3DCD0 ;
-    /* rgba(100, 148, 237, 0.819); * /
-} */
-</style>
-{% endif %}
-
 
 {% endblock %}
 
@@ -144,15 +126,19 @@ body, html {
         
 {% include 'top-navbar.html' %}
 
-{% if getSection.title == "Computing Section" %}
-<!-- <canvas id="matrix"></canvas> -->
-{% endif %}
 <section id="section-container">
 
 <div class="section-contents matrix-content ">
     
     <div class="contents">
-        <div class="section-picture"><img src="/media/{{ getSection.picture }}" width="300px" height="370px" alt="{{ getSection.title }}"/></div>
+        <div class="section-picture">
+            <img src="/media/{{ getSection.picture }}" width="300px" height="370px" alt="{{ getSection.title }}"/>
+            {% if getSection.title == "Music Section" %}
+            <div class="extra-tools">
+                <a href="{% url 'musicStudio:studio' %}">Make some melodies?!</a>
+            </div>
+            {% endif %}
+        </div>
         <div class="section-details">
             <div>
                 <h2>{{ getSection.title }}</h2>
