@@ -148,30 +148,30 @@
             });
         }
 
-        function drawCursorAtoms() {
-            cursorAtoms.forEach(atom => {
-                const electronX = atom.x + atom.orbitRadius * Math.cos(atom.orbitAngle);
-                const electronY = atom.y + atom.orbitRadius * Math.sin(atom.orbitAngle);
+        // function drawCursorAtoms() {
+        //     cursorAtoms.forEach(atom => {
+        //         const electronX = atom.x + atom.orbitRadius * Math.cos(atom.orbitAngle);
+        //         const electronY = atom.y + atom.orbitRadius * Math.sin(atom.orbitAngle);
 
-                // Draw nucleus
-                ctx.fillStyle = '#fff';// '#f0d3bd';
-                ctx.beginPath();
-                ctx.arc(atom.x, atom.y, atom.nucleusRadius, 0, 2 * Math.PI);
-                ctx.fill();
+        //         // Draw nucleus
+        //         ctx.fillStyle = '#fff';// '#f0d3bd';
+        //         ctx.beginPath();
+        //         ctx.arc(atom.x, atom.y, atom.nucleusRadius, 0, 2 * Math.PI);
+        //         ctx.fill();
 
-                // Draw electron
-                ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)] //'#F0DEA5';
-                ctx.beginPath();
-                ctx.arc(electronX, electronY, atom.electronRadius, 0, 2 * Math.PI);
-                ctx.fill();
+        //         // Draw electron
+        //         ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)] //'#F0DEA5';
+        //         ctx.beginPath();
+        //         ctx.arc(electronX, electronY, atom.electronRadius, 0, 2 * Math.PI);
+        //         ctx.fill();
 
-                // Draw orbit path
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-                ctx.beginPath();
-                ctx.arc(atom.x, atom.y, atom.orbitRadius, 0, 2 * Math.PI);
-                ctx.stroke();
-            });
-        }
+        //         // Draw orbit path
+        //         ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        //         ctx.beginPath();
+        //         ctx.arc(atom.x, atom.y, atom.orbitRadius, 0, 2 * Math.PI);
+        //         ctx.stroke();
+        //     });
+        // }
 
         function updateStars() {
             stars.forEach(star => {
@@ -183,15 +183,15 @@
             });
         }
 
-        function updateCursorAtoms() {
-            cursorAtoms.forEach(atom => {
-                atom.orbitAngle += atom.orbitSpeed;
-                if (atom.orbitAngle > 2 * Math.PI) {
-                    atom.orbitAngle = 0;
-                }
+        // function updateCursorAtoms() {
+        //     cursorAtoms.forEach(atom => {
+        //         atom.orbitAngle += atom.orbitSpeed;
+        //         if (atom.orbitAngle > 2 * Math.PI) {
+        //             atom.orbitAngle = 0;
+        //         }
 
-            });
-        }
+        //     });
+        // }
 
         function animate() {
             drawStars();

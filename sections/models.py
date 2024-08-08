@@ -26,7 +26,7 @@ class Section(models.Model) :
         return self.category_set.all()
 
     def __str__(self):
-        if len(self.categories()) > 0: # so that we don't have value issues when adding
+        if self.id is not None: # so that we don't have value issues when adding
             categories = self.categories() # get related
         return f"{self.title}, {self.updated_at}"
 
@@ -50,7 +50,7 @@ class Category(models.Model) :
         return self.content_set.all()
     
     def __str__(self):
-        if len(self.contents()) > 0:
+        if self.id is not None:
             contents = self.contents()
         return f"{self.section.title}: {self.title}"# ,{self.updated_at}"
 
@@ -58,6 +58,7 @@ class Content(models.Model) :
     TYPES = (
         ('Course', _('Course')),
         ('Puzzle', _('Puzzle')),
+        ('Quiz', _('Quiz')),
         ('Story', _('Story')),
         ('Manga', _('Manga')),
     )
@@ -66,7 +67,7 @@ class Content(models.Model) :
         ('Medium', _('Medium')),
         ('Advanced', _('Advanced')),
     )
-    # help(CKEditor5Field)
+
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     level = models.CharField(max_length=30, choices=LEVELS)
     contentType = models.CharField(max_length=30, verbose_name="Content Type", choices=TYPES, default="Course")
@@ -76,8 +77,7 @@ class Content(models.Model) :
     admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_content', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    pictures = models.ForeignKey("Pictures", on_delete=models.CASCADE, null=True, blank=True)
-    text = CKEditor5Field(blank=True,null=True, verbose_name="Content (if you want to edit a Puzzle only the json works!)", config_name='admin')
+    text = CKEditor5Field(blank=True,null=True, verbose_name="Content (editing works only through the json field for now!)", config_name='admin')
     json = models.TextField(blank=True,null=True)
     is_published = models.BooleanField(default=False, verbose_name="Publish Content?")
     
@@ -88,8 +88,7 @@ class Content(models.Model) :
         return self.exercices_set.all()
     
     def __str__(self):
-        # help(CKEditor5Field)
-        if len(self.exercices()) > 0:
+        if self.id is not None:
             exercices = self.exercices()
         return f"{self.title}, {self.updated_at}"
 
@@ -134,7 +133,7 @@ class Exercices(models.Model):
         return self.exercicechoices_set.all()
     
     def __str__(self):
-        if len(self.choices()) > 0:
+        if self.id is not None:
             choices = self.choices()
         return f"{self.name}"
 

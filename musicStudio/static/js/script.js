@@ -118,10 +118,75 @@ async function loadAll (audioContext) {
     return instrumentSamples
 }
 
+const timelineContainer = document.getElementById('timeline-container');
+  const timeScaleFactor = 0.5; // Adjust to control note width 
+
+  function updatePlayhead(currentTime) {
+    const playheadPosition = (currentTime / 1000) * 100 * timeScaleFactor;
+    playhead.style.left = `${playheadPosition}px`;
+  }
+  function startPlay() {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+    playheadInterval = setInterval(() => {
+        const currentTime = audioCtx.currentTime * 1000; // Time in milliseconds
+
+        // Update the playhead position
+        updatePlayhead(currentTime);
+
+        // Check if the music has reached the end
+        if (currentTime >= totalDuration) {
+            stopMusic();
+        }
+        }, 20); // Update every 20ms 
+  }
+  function stopMusic() {
+    clearInterval(playheadInterval); // Stop the playhead animation
+    playhead.style.left = '0'; // Reset playhead position
+  }
+
+
+  function createTimeline(musicData) {
+    for (const part in musicData) { 
+      for (const instrument in musicData[part]) {
+        const track = document.createElement('div');
+        track.innerHTML = "<span class='instrument-name'>"+instrument+"</span>"
+
+        track.classList.add('track');
+        timelineContainer.appendChild(track);
+
+        const instr = document.createElement('div');
+        instr.innerText = instrument
+        musicData[part][instrument].forEach(noteData => {
+          if (noteData.pitch != "0") {
+            const note = document.createElement('div');
+            
+            note.classList.add('note');
+            note.style.left = (noteData.offset * 100 * timeScaleFactor) + 'px'; // Position the note
+            note.style.width = (noteData.duration * timeScaleFactor) + 'px'; // Set note width
+            track.appendChild(note);
+          }
+        });
+      }
+    }
+  }
+
+
 async function playPiece(jsonData) {
     Tone.start(); 
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const currentTime = audioContext.currentTime
+    
+    playheadInterval = setInterval(() => {
+        const currentTime = audioContext.currentTime * 1000; // Time in milliseconds
+
+        // Update the playhead position
+        updatePlayhead(currentTime);
+
+        // Check if the music has reached the end
+        if (currentTime >= totalDuration) {
+            stopMusic();
+        }
+    }, 20); // Update every 20ms 
 
     if (jsonData["JazzPiece"] != undefined)
         jsonData = jsonData["JazzPiece"]

@@ -28,7 +28,8 @@ SECRET_KEY = 'd-n=qjow1k_q@%7o*4h-$+_wb#9+5np$c161^=kp=jj0q56#%o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
+ALLOWED_HOSTS = ['*',]
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 # Application definition
 
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     'musicStudio',
     'custom_admin',
     'sections',
-    'django_ckeditor_5'
+    'django_ckeditor_5',
+    'django_rq',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = 'user:login' 
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -350,7 +353,9 @@ CKEDITOR_5_CONFIGS = {
             'shouldNotGroupWhenFull': True,
             
         },
-        'extraAllowedContent': 'input(*); button(*); script(*)[*]', 
+        'extraAllowedContent': 'input[*]; button(*); script(*)[*]', 
+        'allowedContent': True,
+        
         'fontColor': {
             'colors': customColorPalette,
 
@@ -384,7 +389,7 @@ CKEDITOR_5_CONFIGS = {
                 { 'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2' },
                 { 'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3' }
             ]
-        },
+        }
     },
     'list': {
         'properties': {
@@ -393,4 +398,19 @@ CKEDITOR_5_CONFIGS = {
             'reversed': 'true'
         }
     }
+}
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'redis',  # From docker-compose.yml
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,  # Task timeout in seconds
+    },
+    'admin_contents': {
+        'HOST': 'redis',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    },
 }

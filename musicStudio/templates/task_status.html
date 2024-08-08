@@ -1,0 +1,8 @@
+<h2>Task Status</h2>
+<p>Task ID: {{ job.id }}</p>
+<p>Status: {{ job.get_status}}</p>
+<p>meta: {{ job.meta }}</p> 
+<p>Result: {{ result }}</p> 
+{% if job.is_finished %}
+    <p>Result: {{ job.result }}</p> 
+{% endif %}

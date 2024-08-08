@@ -23,10 +23,12 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
     environment:
       - DATABASE_URL=postgres://root:root@db:5432/clubdatabase
 
-  nginx:  # Add the Nginx service
+
+  nginx:  # Nginx service
     image: nginx:latest 
     ports:
       - "8080:8080" 
@@ -36,6 +38,26 @@ services:
       - media:/app/media:rw   # Share media files volume 
     depends_on:
       - web
+
+  redis:  # Redis service
+    image: "redis:alpine"
+
+  worker: # RQ worker service
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    command: > # Run the worker for the 'default' queue
+        sh -c "python manage.py rqworker default"  
+    volumes:
+      - .:/app:rw
+      - staticfiles:/app/staticfiles:rw
+      - media:/app/media:rw
+    environment:
+      - DATABASE_URL=postgres://root:root@db:5432/clubdatabase
+    deploy:
+      replicas: 1
+    depends_on:
+      - redis
 
 volumes:
   postgres_data:

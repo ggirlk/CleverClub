@@ -6,7 +6,9 @@ import json
 from django.conf import settings
 import os
 from cleverClub.utils import GenerateAnything
-
+#from django_ckeditor_5.fields import CKEditor5Field
+from .tasks import generate_contents
+from django_rq import get_queue
 
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
@@ -20,7 +22,7 @@ class CategoryAdmin(admin.ModelAdmin):
     pass
 
 class ContentForm(forms.ModelForm):
-    generate = forms.BooleanField(required=False, help_text="Generate content using AI?") # try to add a fied to the form
+    generate = forms.BooleanField(required=False, help_text="Generate content using AI?")
 
     class Meta:
         model = Content
@@ -32,8 +34,16 @@ class ContentAdmin(admin.ModelAdmin):
     form.base_fields['generate'].initial = False
 
     def save_model(self, request, obj, form, change):
-        gem = GenerateAnything()
+        obj.save() 
+        args = {
+            "generate": form['generate'].value(),
+            "obj": obj
+        }
+        queue = get_queue('default') 
+        job = queue.enqueue(generate_contents, args, result_ttl=3600)
+        """gem = GenerateAnything()
         # print(type(obj.json), obj.json)
+        html, jsonContent = None, None
         try:
             if form['generate'].value() == True:
 
@@ -43,25 +53,25 @@ class ContentAdmin(admin.ModelAdmin):
 
                 print("generated json", type(jsonContent), jsonContent)
   
-                html, jsonContent = gem.jsonToHTML(jsonContent)
-                            
-                obj.json = json.dumps(jsonContent)
-                obj.text = html
-                print("html", html)
-                obj.save()
+                html, jsonContent = gem.jsonToHTML(jsonContent)        
+                
             else:
                 html, jsonContent = gem.jsonToHTML(obj.json)
-                obj.json = json.dumps(jsonContent)
-                obj.text = html  
-                obj.save()
-
+               
+            if html == None and jsonContent == None:
+                return self.message_user(request, "Oops an error has occured!", level=messages.ERROR) 
+            obj.json = json.dumps(jsonContent)
+            obj.text = htmldefault
+            obj.save() 
             # except json.JSONEncoderError as e:
             #     print(f"Error encoding JSON: {e}")
             # self.message_user(request, f"The content “{obj.__str__}” was changed successfully. You may edit it again below.", level=messages.SUCCESS)
         except Exception as e:
+            raise
             print(f"Error: {e}")
             self.message_user(request, f'There was an error while saving please try again later! {str(e)}', level=messages.ERROR)
-
+        """
+        return self.message_user(request, f'Job has started check by id: {job.id}', )
 
 @admin.register(Enrolments)
 class EnrolmentsAdmin(admin.ModelAdmin):

@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from user.models import CustomUser
+# from .views import RQStatusAdminView
 
 admin.site.site_header = "Infinite Dream"
 admin.site.site_title = _("Admin Portal")
@@ -32,6 +33,7 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
 
 
  

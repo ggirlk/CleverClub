@@ -18,6 +18,7 @@
     #section-container {
         display: flex;
         margin-top: 1%;
+        min-width: 700px;
 
     }
     .section-contents {
@@ -96,7 +97,25 @@
         background-color: #F3DCD0;
         color: rgb(194, 79, 59);
     }
-
+    .contents {
+        min-width: 560px;
+    }
+    /* .grid-cell {
+        width: 9%;
+        text-align: center;
+    } */
+    #sudoku-grid input {
+        width: 35px;
+        height: 35px;
+        text-align: center;
+    }
+    .prefilled {
+        background-color: aliceblue;
+    }
+    #puzzle-container {
+        margin-left: 10%;
+        text-align: center;
+    }
 </style>
 
 
@@ -109,7 +128,7 @@
 <section id="section-container">
 
 <div class="section-contents">
-    
+    <div class="links"><a href="{% url 'sections:section' getContent.category.section.id %}">{{ getContent.category.section.title }}</a> > <a href="#">{{getContent.category.title}}</a> > <a href="{% url 'sections:content' getContent.category.section.id getContent.category.title getContent.category.id getContent.id %}">{{getContent.title}}</a>: </div>
     <div class="contents">
             <div>{{ getContent.text|safe }}</div>
     </div>
@@ -130,7 +149,3 @@
 {% block scripts %}
 <!-- <script type="text/javascript" src="{% static '/js/matrix.js' %}"></script> -->
 {% endblock %}
-
-
-
-
