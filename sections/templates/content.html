@@ -55,8 +55,8 @@
     .section-contents .contents img {
         display: block;
         margin: auto;
-        width: 300px;
-        height: 300px;
+        /* width: 300px;
+        height: 300px; */
     }
     .level {
         padding: 2px 5px;
@@ -143,6 +143,7 @@
     }
     p {
         color: rgb(1, 25, 80);
+        padding-bottom: 18px;
     }
     @media screen and (max-width: 1024px) {
         .sections-menu {
@@ -193,5 +194,24 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+// scale content images
+let images = document.querySelectorAll('.contents img')
+for (let i = 0; i < images.length; i++){
+    let scaller = 1
+    if (images[i].offsetWidth > 1000) {
+        scaller = 3
+    }
+    if (images[i].offsetWidth > 2000) {
+        scaller = 6
+    }
+    
+    let width = (images[i].offsetWidth / scaller) + "px"
+    let height  = (images[i].offsetHeight / scaller) + "px"
+    images[i].setAttribute('style', `width:${width}; height:${height};`)
+
+}
+
+</script>
 <!-- <script type="text/javascript" src="{% static '/js/matrix.js' %}"></script> -->
 {% endblock %}

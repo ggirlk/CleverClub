@@ -199,6 +199,7 @@ window.onload = () => {
     function createTimeline(musicData) {
         console.log("I am createTimeline")
         let container = document.getElementById('timeline-container');
+        container.width = 100+"% !important"
         container.innerHTML = '<div id="playhead"></div>';
         for (const part in musicData) {
             for (const instrument in musicData[part]) {
@@ -239,9 +240,6 @@ window.onload = () => {
                                 note.style.background = "radial-gradient(circle, rgba(251,153,137,1) 0%, rgba(137,105,255,1) 100%)"; //"rgb(112, 151, 244)"
                             }
                             track.appendChild(note);
-
-                            
-                    
                         });
                     }
                 }
