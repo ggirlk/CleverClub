@@ -334,7 +334,7 @@ window.onload = () => {
         }
 
     }
-    fetchJob(false)
+    fetchJob(false) // TODO getand fetch the current job when there is any for page refresh
     function generateSound(path) {
 
         const formData = $('#generate-form').serialize()

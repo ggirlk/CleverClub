@@ -159,6 +159,9 @@
             width: 100%;
             order: 2;
         }
+        .section-picture {
+            display: none;
+        }
     }
     
 </style>
@@ -215,7 +218,7 @@
                     <li>
                         <a href="{% url 'sections:content' getSection.id category.title category.id content.id %}"><h5><span class="contentType">{{ content.contentType }}</span>  {{ content.title }} <span class="level {{ content.level }}">{{ content.level }}</span></h5> 
                         <div class="content-details">
-                            <p>{{ content.description }}  </p>
+                            <p>{{ content.description|safe }}  </p>
                         </div></a> 
                         <hr>
 
