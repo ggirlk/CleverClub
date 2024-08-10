@@ -115,13 +115,20 @@
             body {
                 background-color: black;
             }
-            .studio-section {
+            .main {
                 min-height: 100vh;
+                padding-bottom: 40px;
+                /* background-color: rgb(1, 32, 56); */
+                font-family: "Short Stack", cursive;
+                font-weight: 400;
+                font-style: normal;
+            }
+            .studio-section {
                 width: 95%;
                 margin: 1% auto;
                 background-color: #F3DCD0;
 
-                font-family: Arial, sans-serif;
+                /* font-family: Arial, sans-serif; */
                 border-radius: 10px;
                 /* background-color: cornflowerblue; */
 
@@ -138,7 +145,13 @@
                 justify-content: space-around;
                 align-items: flex-start;
             }
-
+            .form-section {
+                width: 25%;
+            }
+            .playhead-section {
+                width: 75%;
+            }
+           
             #timeline-container {
                 width: 80%;
                 min-height: 70vh; /* Adjust height to fit instrument lines */
@@ -169,28 +182,15 @@
                 left: 0px;
                 width: 2px;
                 height: 100%;
-                background-color: #4e23a6; /* rgb(221, 90, 68); /* Orange  / sweet color : #ff2d8e; */ 
-                /* animation: playhead-animation 12s linear infinite; */
-                 /* Adjust duration (12s here) */
+                background-color: #4e23a6;
                  transition: 10%;
             }
-            .animate {
-                animation: playhead-animation 12s linear infinite;
-            }
-            @keyframes playhead-animation {
-                from { left: 0; }
-                to { left: 100%; }
-            }
+          
             .instrument-name {
                 position: relative;
                 z-index: 999;
             }
-            .form-section {
-                width: 25%;
-            }
-            .playhead-section {
-                width: 75%;
-            }
+            
             #loading-song {
                 text-align: center;
                 min-height: 100vh;
@@ -210,6 +210,108 @@
                 font-size: 0.9rem;
 
             }
+            .links a {
+                color: rgb(112, 151, 244);
+                text-decoration: none;
+                font-weight: bold;
+            }
+            h1 {
+                color:rgb(6, 54, 167)
+            }
+            h2 {
+                color:rgb(31, 97, 251)
+            }
+            h3 {
+                color:rgb(83, 26, 241);
+            }
+            h4 {
+                color:rgb(50, 77, 252)
+            }
+            h5 {
+                color: rgb(98, 41, 255);
+            }
+            p {
+                color: rgb(1, 25, 80);
+            }
+            .form-section label {
+                display: block;
+                line-height: 1.8;
+                color: rgb(120, 75, 255);
+            }
+            .form-section input[type=text], .form-section select {
+                width: 100%;
+            }
+            #controls select {
+                width: 20%;
+            }
+            .form-section input[type=text], .form-section select, #controls select {
+                /* line-height: 1.8; */
+                padding: 5px;
+                box-sizing: border-box;
+                margin-bottom: 5px;
+                border-radius: 10px;
+                border: none;
+                background-color: white;
+
+            }
+            #id_feel, #id_instruments, #id_drums {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+            }
+            #id_feel div, #id_instruments div, #id_drums div {
+                padding-left: 5px;
+                padding-right: 5px;
+                margin: 5px;
+                background-color: rgb(242, 160, 179);
+                color: rgb(120, 75, 255);
+                border-radius: 10px;
+                box-sizing: border-box;
+            }
+            #id_feel label:hover, #id_instruments label:hover, #id_drums label:hover {
+                cursor: pointer;
+            }
+            .form-section fieldset {
+                border-color: #4e23a6;
+                margin-top: 10px;
+            }
+            .form-section legend {
+                line-height: 1.8;
+                color: rgb(120, 75, 255);
+            }
+            #submit {
+                text-align: right;
+            }
+            #controls div {
+                /* text-align: center; */
+                width: 85%;
+                margin: auto;
+            }
+            @media screen and (max-width: 1024px) {
+                .studio-section {
+                    width: 100%;
+                }
+                #section-elements {
+                    flex-direction: column;
+                }
+                .playhead-section{
+                    /* display: block; */
+                    width: 100%;
+                    margin: auto;
+
+                }
+                .form-section {
+                    /* display: block; */
+                    width: 75%;
+                    margin: auto;
+
+                }
+                #controls div {
+                    /* text-align: center; */
+                    width: 80%;
+                }
+                
+            }
         </style>
 
 {% endblock %}
@@ -219,7 +321,23 @@
 {% include 'top-navbar.html' %}
 
 <section class="studio-section">
+    <div class="links"><a href="{% url 'sections:section' 1 %}">Music Section</a> > <a href="#">Studio</a></div>
+    <hr>
+    <div id="controls">
+        <div>
+        <select id="select-tone">
+            <!-- <option value=""></option> -->
+            {% for tones in allGenerated %}
+            <option value="{{tones.id}}" data-url="{% url 'musicStudio:getSelectedTones' tones.id %}">{{tones.title}}</option>
+            {% endfor %}
+        </select>
+        <button id="play" type="button">Play Generated</button>
+        <button id="play-loop" type="button">Loop Generated</button>
+        <button id="stop" type="button" data-url="" >Stop</button>
+        </div>
+    </div>
     <div id="section-elements">
+        
         <div class="playhead-section">
             <div id="timeline-container">
                 <div id="playhead"></div> 
@@ -230,20 +348,12 @@
         <!-- <button id="generate" data-url="{% url 'musicStudio:generate.music' %}" >Generate</button> -->
         <div class="form-section">
             <form id="generate-form" method="post">
-                <select id="select-tone">
-                    <!-- <option value=""></option> -->
-                    {% for tones in allGenerated %}
-                    <option value="{{tones.id}}" data-url="{% url 'musicStudio:getSelectedTones' tones.id %}">{{tones.title}}</option>
-                    {% endfor %}
-                </select>
-                <button id="play" type="button">Play Generated</button>
-                <button id="play-loop" type="button">Loop Generated</button>
-                <button id="stop" type="button" data-url="" >Stop</button>
-                <button id="generate" data-url="{% url 'musicStudio:generate.music' %}" type="button">Generate</button>
-                <p>Chose your music parametres:</p>
+                <h4>Chose your music parametres:</h4>
                 {% csrf_token %}
-                {{ generater.as_p }}
-                
+                {{ generater.as_div }}
+                <div id="submit">
+                    <button id="generate" data-url="{% url 'musicStudio:generate.music' %}" type="button">Generate</button>
+                </div>
             </form>
         </div>
     </div>
@@ -253,9 +363,3 @@
 
 
 {% endblock %}
-
-var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(storageObj));
-var dlAnchorElem = document.getElementById('downloadAnchorElem');
-dlAnchorElem.setAttribute("href",     dataStr     );
-dlAnchorElem.setAttribute("download", "scene.json");
-dlAnchorElem.click();

@@ -34,7 +34,9 @@ class ContentAdmin(admin.ModelAdmin):
     form.base_fields['generate'].initial = False
 
     def save_model(self, request, obj, form, change):
-        obj.save() 
+        if obj.json == "" :
+            obj.save()
+         
         args = {
             "generate": form['generate'].value(),
             "obj": obj

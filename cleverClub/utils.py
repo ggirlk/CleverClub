@@ -323,10 +323,10 @@ class GenerateAnything():
                                 </div>\n\
                                 <script type='text/javascript'>\n\
                                     function checkAnswer() {\n\
-                                        javascript full code to check the player answer when needed depending on the puzzle logic and becareful of infinite loops\
+                                        javascript full code to check the player answer when needed depending on the puzzle logic and becarefull of infinite loops\
                                         and if answer validated push a success message else a sweet warning message to try again\
                                                 using sweet alert (version 2.1.2) instead of classical alert to show messages\
-                                                here is an Example of success swal("Yay 🎉🎉", "Well done! congratulation you've solved the puzzle!\n\
+                                                here is an Example of success swal("Yay 🎉🎉", "Well done! congratulation you've solved the puzzle!", "success")\n\
                                     }\n\
                                     other script for interactivity like manipulating the canvas or generating different numbers or words depending on the puzzle\n\
                                 </script>

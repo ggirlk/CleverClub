@@ -334,8 +334,9 @@ window.onload = () => {
             success: function (data) {
                 console.log(data);
                 if (data != undefined && data["success"] == true) {
-                    loading.style.width = window.innerWidth; 
-                    loading.style.height = window.innerHeight; 
+                    let section = document.getElementById("section-elements")
+                    loading.style.width = section.style.width; 
+                    loading.style.height = section.style.height; 
                     loading.style.display = "block"
                     console.log("generating process started");
                     job = data["job"];

@@ -23,7 +23,7 @@ header {
 }
 
 #about-section {
-    height: 250px;
+    /* height: 250px; */
     /* margin-top: 90px; */
     background-color: rgba(31, 97, 251, 0.3);
     box-shadow: 0px 3px 8px #F3DCD0;
@@ -96,12 +96,18 @@ header {
 
     /* perspective: 2000px; */
 }
-@media screen and (max-width: 840px)  {
+@media screen and (max-width: 1024px)  {
     #cards-section {
         margin-top: 12%;
-    
+        width: 100%;
     }
-    
+    #cards-section .cards {
+        margin: auto;
+        margin-bottom: 20px;
+    } 
+    #about-section h1 {
+        font-size: 3rem;
+    }  
 }
 #cards-section .cards {
     /* width: 290px; */

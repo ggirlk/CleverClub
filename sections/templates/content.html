@@ -14,6 +14,9 @@
         min-height: 100vh;
         padding-bottom: 40px;
         /* background-color: rgb(1, 32, 56); */
+        font-family: "Short Stack", cursive;
+        font-weight: 500;
+        font-style: normal;
     }
     #section-container {
         display: flex;
@@ -25,7 +28,7 @@
         width: 80%;
         min-height: 87vh;
         margin: auto;
-        font-family: Arial, sans-serif;
+        /* font-family: Arial, sans-serif; */
         border-radius: 10px;
         /* background-color: cornflowerblue; */
 
@@ -116,6 +119,46 @@
         margin-left: 10%;
         text-align: center;
     }
+    .links a {
+        color: rgb(112, 151, 244);
+        text-decoration: none;
+        font-weight: bold;
+    }
+    h1 {
+        color:rgb(6, 54, 167)
+    }
+    h2 {
+        color:rgb(31, 97, 251)
+    }
+    h3 {
+        color:rgb(83, 26, 241);
+    }
+    h4 {
+        color:rgb(50, 77, 252)
+    }
+    h5 {
+        color: rgb(98, 41, 255);
+    }
+    p {
+        color: rgb(1, 25, 80);
+    }
+    @media screen and (max-width: 1024px) {
+        .sections-menu {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            overflow-x: scroll;
+            order: 1;
+
+        }
+        #section-container {
+            flex-direction: column;
+        }
+        .section-contents  {
+            width: 100%;
+            order: 2;
+        }
+    }
 </style>
 
 
@@ -128,7 +171,8 @@
 <section id="section-container">
 
 <div class="section-contents">
-    <div class="links"><a href="{% url 'sections:section' getContent.category.section.id %}">{{ getContent.category.section.title }}</a> > <a href="#">{{getContent.category.title}}</a> > <a href="{% url 'sections:content' getContent.category.section.id getContent.category.title getContent.category.id getContent.id %}">{{getContent.title}}</a>: </div>
+    <div class="links"><a href="{% url 'sections:section' getContent.category.section.id %}">{{ getContent.category.section.title }}</a> > <a href="#">{{getContent.category.title}}</a> > <a href="{% url 'sections:content' getContent.category.section.id getContent.category.title getContent.category.id getContent.id %}">{{getContent.title}}</a> </div>
+    <hr>
     <div class="contents">
             <div>{{ getContent.text|safe }}</div>
     </div>

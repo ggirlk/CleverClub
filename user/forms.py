@@ -7,6 +7,12 @@ class CustomUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
+    birthday = forms.DateField(
+        label="Date of Birth",
+        required=True,
+        widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
+        input_formats=["%Y-%m-%d"]
+    )
     class Meta:
         model = CustomUser
         fields = ('email', 'first_name', 'last_name', 'role', 'birthday')

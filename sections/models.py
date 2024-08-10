@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 from django.conf import settings
 # from cleverClub.utils import GenerateAnything
@@ -24,10 +25,12 @@ class Section(models.Model) :
     def categories(self):
         """ return related """
         return self.category_set.all()
+        # print("categories", request.user.is_staff)
+        # if request.user.is_staff:
+        #     return self.category_set.all()
+        # return self.category_set.all().filter(is_published=True)
 
     def __str__(self):
-        if self.id is not None: # so that we don't have value issues when adding
-            categories = self.categories() # get related
         return f"{self.title}, {self.updated_at}"
 
 
@@ -48,10 +51,12 @@ class Category(models.Model) :
 
     def contents(self):
         return self.content_set.all()
+        # if request.user.is_staff:
+        #     return self.content_set.all()
+        # return self.content_set.all().filter(is_published=True)
+
     
     def __str__(self):
-        if self.id is not None:
-            contents = self.contents()
         return f"{self.section.title}: {self.title}"# ,{self.updated_at}"
 
 class Content(models.Model) :
@@ -72,7 +77,7 @@ class Content(models.Model) :
     level = models.CharField(max_length=30, choices=LEVELS)
     contentType = models.CharField(max_length=30, verbose_name="Content Type", choices=TYPES, default="Course")
     title =  models.CharField(max_length=30)
-    description =  models.TextField()
+    description =  CKEditor5Field(config_name='default')
     # section = models.ForeignKey("Section", on_delete=models.CASCADE)
     admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_content', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -86,10 +91,11 @@ class Content(models.Model) :
 
     def exercices(self):
         return self.exercices_set.all()
+        # if request.user.is_staff:
+        #     return self.exercices_set.all().filter(is_published=True)
+        # return self.exercices_set.all()
     
     def __str__(self):
-        if self.id is not None:
-            exercices = self.exercices()
         return f"{self.title}, {self.updated_at}"
 
 
@@ -131,10 +137,11 @@ class Exercices(models.Model):
 
     def choices(self):
         return self.exercicechoices_set.all()
-    
+        # if request.user.is_staff:
+        #     return self.exercicechoices_set.all()
+        # return self.exercicechoices_set.all().filter(is_published=True)
+
     def __str__(self):
-        if self.id is not None:
-            choices = self.choices()
         return f"{self.name}"
 
 
