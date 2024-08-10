@@ -5,7 +5,7 @@ window.onload = () => {
     const stopBtn = document.getElementById("stop");
     const musicList = document.getElementById("select-tone");
     const loading = document.getElementById("loading-song");
-
+    
     const timelineContainer = document.getElementById('timeline-container');
     let playhead = document.getElementById('playhead');
     //const timeScaleFactor = 0.5; // 
@@ -17,6 +17,7 @@ window.onload = () => {
     let getJsonData;
 
     generateBtn.addEventListener('click', function (e) {
+        this.setAttribute('disabled', true)
         console.log("I'm generate!");
         e.preventDefault();
         generateSound(this.getAttribute("data-url"));
@@ -35,7 +36,7 @@ window.onload = () => {
                 swal(jsonData.error);
         }
         else
-            swal("An Error has occured!");
+            swal("", "You have to generate a song first!", "error");
 
     });
     let stopLoop = false
@@ -69,20 +70,31 @@ window.onload = () => {
     async function DrawSelected()  {
         const selectedTone = document.getElementById('select-tone');
         const selectedIndex = selectedTone.options.selectedIndex;
-        const url = selectedTone.options[selectedIndex].getAttribute('data-url');
-        getJsonData = await getGenerated(url);
-        // console.log("this 1", jsonData);
-        //console.log("this getJsonData", typeof(getJsonData), getJsonData);
-        if (getJsonData != undefined) {
-            if (getJsonData.error != false) {
-                createTimeline(getJsonData);
+
+        try {
+            const url = selectedTone.options[selectedIndex].getAttribute('data-url');
+            console.log("this 1", url);
+        
+            getJsonData = await getGenerated(url);
+
+            
+            // console.log("this 1", jsonData);
+            //console.log("this getJsonData", typeof(getJsonData), getJsonData);
+            if (getJsonData != undefined) {
+                if (getJsonData.error != false) {
+                    createTimeline(getJsonData);
+                }
+                else
+                    swal(getJsonData.error);
             }
             else
-                swal(getJsonData.error);
+                swal("An Error has occured!");
+            
+        } catch (e) {
+            swal("Welcome to the music generator, have fun!!");
+
         }
-        else
-            swal("An Error has occured!");
-    
+
     }
     DrawSelected()
     musicList.addEventListener("change", DrawSelected)
@@ -276,6 +288,8 @@ window.onload = () => {
                             if (data.job.is_finished == true) {
                                 console.log("the result", data.result);
                                 loading.style.display = "none"
+                                this.setAttribute('disabled', false)
+
                                 clearInterval(checkJob)
 
                                 //if (job.result != null) {
@@ -310,6 +324,7 @@ window.onload = () => {
                             } 
                         } else {
                             loading.style.display = "none"
+                            this.setAttribute('disabled', false)
                             clearInterval(checkJob)
                             swal("Error!", "There was an error!!", "error")
                             console.log(data.error);
@@ -334,9 +349,6 @@ window.onload = () => {
             success: function (data) {
                 console.log(data);
                 if (data != undefined && data["success"] == true) {
-                    let section = document.getElementById("section-elements")
-                    loading.style.width = section.style.width; 
-                    loading.style.height = section.style.height; 
                     loading.style.display = "block"
                     console.log("generating process started");
                     job = data["job"];

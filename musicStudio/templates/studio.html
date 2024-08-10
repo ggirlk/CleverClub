@@ -112,8 +112,9 @@
 			
 		</script>
         <style>
-            body {
+            html, body {
                 background-color: black;
+                height: 100%
             }
             .main {
                 min-height: 100vh;
@@ -132,7 +133,6 @@
                 border-radius: 10px;
                 /* background-color: cornflowerblue; */
 
-                background-color: #F3DCD0;
                 padding: 20px;
                 box-sizing: border-box;
                 /* flex: 1; */
@@ -193,15 +193,17 @@
             
             #loading-song {
                 text-align: center;
+                /* height: 100%; */
                 min-height: 100vh;
-                width: 95%;
+                width: 100vw;
+                /* border-radius: 10px; */
                 margin: auto;
                 background-color: #4f23a67d;
                 display: none;
-                position: absolute;
+                position: fixed;
                 left: 0;
                 right: 0;
-                top: 22.5%;
+                top: 0px;
                 bottom: 0;
             }
             .tone-span {
@@ -273,7 +275,7 @@
             }
             .form-section fieldset {
                 border-color: #4e23a6;
-                margin-top: 10px;
+                margin-bottom: 10px;
             }
             .form-section legend {
                 line-height: 1.8;
@@ -360,6 +362,8 @@
     <a href="{% url 'musicStudio:task_status' ':job' %}" id="helper" style="display: none;" ></a>
     <div id="loading-song"><img src="/media/imgs/drumming-banging-drums.gif" > <p>Generating ...</p></div>
 </section>
+<script>
 
+</script>
 
 {% endblock %}
