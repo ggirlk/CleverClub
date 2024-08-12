@@ -1,4 +1,4 @@
-#!usr/bin/bash
+#!/bin/bash
 
 # Build the Docker images Run the Docker containers
 docker-compose up -d --build
