@@ -80,7 +80,7 @@ def generateMusic(request):
 
             args = {
                 "user_id": request.user.id,
-                "admin_id": "NULL",
+                "admin_id": None,
                 "title": form.cleaned_data['title'],
                 'style': form.cleaned_data['style'],
                 'key': form.cleaned_data['key'], 

@@ -33,7 +33,6 @@ KEYS = (
         ("Eminor", "E minor"),
         ("Bminor", "B minor"),
         ("F#minor", "F# minor"),
-        ("F#minor", "F# minor"),
         ("C#minor", "C# minor"), 
         ("G#minor", "G# minor"),
         ("D#minor", "D# minor"),
