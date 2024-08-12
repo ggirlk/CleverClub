@@ -9,14 +9,14 @@ from django_rq import job
 
 @job
 def generate_contents(args): 
-
-    # user = args['user']
-    print("Generating ...")
+    """  """
     try:
         gem = GenerateAnything()
         html, jsonContent = None, None
         obj = args['obj']
         if args['generate'] == True:
+
+            print("Generating ...")
 
             prompt = gem.getPrompt(obj, obj.contentType)
             
@@ -39,7 +39,7 @@ def generate_contents(args):
         obj.save() 
 
         result = {"jsonContent": jsonContent, 'id': obj.id, "title": obj.title, "error": False}
-        print(result)
+        #print(result)
         return result 
     except Exception as e:
         print("got error", e)

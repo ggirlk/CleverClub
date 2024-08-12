@@ -19,6 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
     # fields = ('title', 'level', 'tagId', 'pictureLink', 'shortDescription',"section", "longDescription", "admin", 'is_published')
     # # list_display = ('level',)
     # form = CategoryForm
+    list_filter = ('section',)
     pass
 
 class ContentForm(forms.ModelForm):
@@ -32,6 +33,8 @@ class ContentForm(forms.ModelForm):
 class ContentAdmin(admin.ModelAdmin):
     form = ContentForm
     form.base_fields['generate'].initial = False
+
+    list_filter = ('category',)
 
     def save_model(self, request, obj, form, change):
         if obj.json == "" :

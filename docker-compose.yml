@@ -16,9 +16,9 @@ services:
       dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000  
     volumes:
-      - .:/app:rw #  Mark the app code as read-only in the container
-      - staticfiles:/app/staticfiles:rw # Mount the named volume for static files
-      - media:/app/media:rw # Mount the named volume for media files
+      - .:/app:ro #  Mark the app code as read-only in the container
+      - staticfiles:/app/staticfiles:ro # Mount the named volume for static files
+      - media:/app/media:ro # Mount the named volume for media files
     ports:
       - "8000:8000"
     depends_on:
@@ -33,9 +33,9 @@ services:
     ports:
       - "8080:8080" 
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:rw # Mount Nginx config
-      - staticfiles:/app/staticfiles:rw # Share static files volume
-      - media:/app/media:rw   # Share media files volume 
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro # Mount Nginx config
+      - staticfiles:/app/staticfiles:ro # Share static files volume
+      - media:/app/media:ro   # Share media files volume 
     depends_on:
       - web
 
@@ -49,9 +49,9 @@ services:
     command: > # Run the worker for the 'default' queue
         sh -c "python manage.py rqworker default"  
     volumes:
-      - .:/app:rw
-      - staticfiles:/app/staticfiles:rw
-      - media:/app/media:rw
+      - .:/app:ro
+      - staticfiles:/app/staticfiles:ro
+      - media:/app/media:ro
     environment:
       - DATABASE_URL=postgres://root:root@db:5432/clubdatabase
     deploy:

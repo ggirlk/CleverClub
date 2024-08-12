@@ -452,28 +452,50 @@ class GenerateAnything():
                             ]
                             }
                             """
-        # else:
-        #     output_format = """
-        #                     {
-        #                     "tags": [
-        #                         {"tag": "h1", "innerText": "text"},
-        #                         {"tag": "h2", "innerText": "text"},
-        #                         // .....
-        #                         {"tag": "h6", "innerText": "text"},
-        #                         {"tag": "ul", "innerText": [
-        #                             {"tag": "li", "innerText": "text"},
-        #                             {"tag": "li", "innerText": "text"},
-        #                             // ..
-        #                                         ]},
-        #                         {"tag": "input", "type": "text", "id": "student-answer_i", "innerText": ""},          
-        #                         {"tag": "button", "class": "btn-question", "data-question": "i", "innerText": "Check my answer"},
-        #                         {"tag": "p", "innerText": "text"},
-        #                         {"tag": "a", "href": "link", "innerText": "text"},
-        #                         {"tag": "img", "src": "image_link", "alt":"picture title", "innerText": "text"},
-        #                         // ..
-        #                      ]
-        #                     }
-        #                     """
+
+        output_format = """ 
+                        { 
+                         "html": '<div class="my-content">
+                                <h2>Title</h2>
+                                <p>description</p>
+                                <section>
+                                    <h3>Paragraph 1 title</h3>
+                                    <p>paragraph 2 text</p>
+                                    <div><img src="link_to_image" alt="" ></div>
+                                    <div><canvas id="content_canvas"></canvas></div> // only if needed
+                                    <ul><h5>list</h5> // list if needed
+                                        <li>element 1</li>
+                                        <li>element 2</li>
+                                        <li>element 3</li>
+                                    </ul>
+                                    // ... add more content elements as needed ...
+                                </section>
+                                // .. other paragraphs ...
+                                <section>
+                                    <h3>Quiz time</h3>
+                                    <p>Quiz text</p>
+                                    <ul><h4 id="question_i">Question 1 What is ...?</h4>
+                                        <li data-choice="a">a) option a</li>
+                                        <li data-choice="b">b) option b</li>
+                                        <li data-choice="c">c) option c</li>
+                                        <li><input id="student-answer_i"></li>
+                                        <li><p id="answer_i" hidden="True">the right choice which can be only a or b or c (don't put the whole option)</p></li>
+                                        <li><button onclick=""checkMyAnswer()>Check My Answer</button></li>
+                                    </ul>
+                                    // .. other 5 quuestions ...
+                                </section>
+                           </div>
+                           <script type="text/javascript">
+                                    use the canvas to draw shapes when needed
+                                    declare btn-question, 
+                                    define event on button click;
+                                        get attribute data-question number and compare student-answer_i value (which should contain the choice a or b or c ..) with answer_i innerText value which should be the correct choice a or b or c ..,
+                                        if the values are alike push a success message else a sweet warning message to try again
+                                        using sweet alert (version 2.1.2) instead of classical alert to show messages
+                                        // Example of success swal("title", "message", "success")
+                                        if the generated content needs reading contents use web api audio
+                            </script>'
+                        """
         prompt ="""{
                      "description": "Generate a """+ obj.contentType +""" that follows the prompt details, the """+ obj.contentType +""" can contain well linked existing images, links code sections, any specialchars or symbols, as a generated json make sure to follow the output format sample and combine as you need",
                      "prompt_details": {
@@ -487,7 +509,7 @@ class GenerateAnything():
                         "length": "Medium",
                         "audience": "kids and teenagers",
                         "extra_notes": "use emojies, and generate images for it",
-                        "important_note": "make sure to generate only the output json starting by {'tags' : [....]} and to add \ before each " so that we don't get parsing errors and make sure the json is valide",
+                        "important_note": "make sure to generate only the output json starting by {'html' : '...'} and to add \ before each " so that we don't get parsing errors and make sure the json is valide",
                         "output_format": """+output_format+"""
                     }
                  """
@@ -612,36 +634,3 @@ class GenerateAnything():
                 
         return html
     
-        try:
-            return json.loads(json_string)
-        except json.JSONDecodeError as e:
-            print(f"Original error: {e}")
-
-            # Extract error position 
-            error_position = None
-            match = re.search(r"line \d+ column (\d+)", str(e))
-            if match:
-                error_position = int(match.group(1)) - 1
-
-            if error_position is not None:
-                # Comma insertion (using bytes)
-                try:
-                    fixed_json = json_string[:error_position] + b',' + json_string[error_position:]
-                    return json.loads(fixed_json) 
-                except json.JSONDecodeError as e2:
-                    print(f"Error after comma insertion: {e2}")
-
-            # Other fixes (using bytes)
-            fixed_json = re.sub(rb'([{,]\s*)([a-zA-Z0-9_]+)(\s*:)', rb'\1"\2"\3', json_string)
-            fixed_json = re.sub(rb',\s*([}\]])', rb'\1', fixed_json)
-            fixed_json = fixed_json.replace(b'\\"', b'"')
-
-            try:
-                return json.loads(fixed_json) 
-            except json.JSONDecodeError as e:
-                print(f"Error after other auto-fixes: {e}")
-                try:
-                    return self.autoFixJson(json_string)
-                except Exception as e:
-                    print(f"Error after other auto-fixes: {e}")
-                    return None

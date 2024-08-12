@@ -73,13 +73,13 @@ class Content(models.Model) :
         ('Advanced', _('Advanced')),
     )
 
+    admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_content', on_delete=models.CASCADE)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     level = models.CharField(max_length=30, choices=LEVELS)
     contentType = models.CharField(max_length=30, verbose_name="Content Type", choices=TYPES, default="Course")
     title =  models.CharField(max_length=30)
     description =  CKEditor5Field(config_name='default')
     # section = models.ForeignKey("Section", on_delete=models.CASCADE)
-    admin = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='admin_content', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     text = CKEditor5Field(blank=True,null=True, verbose_name="Content (editing works only through the json field for now!)", config_name='admin')

@@ -76,7 +76,6 @@ window.onload = () => {
             console.log("this 1", url);
         
             getJsonData = await getGenerated(url);
-
             
             // console.log("this 1", jsonData);
             //console.log("this getJsonData", typeof(getJsonData), getJsonData);
@@ -251,8 +250,6 @@ window.onload = () => {
     function moveHead(audioContext) {
         //console.log("I'm moving")
         
-        // animation: playhead-animation 12s linear infinite
-
         //audioContext.resume()
         playheadInterval = setInterval(() => {
              // Time in milliseconds
@@ -269,7 +266,7 @@ window.onload = () => {
                 playhead = document.getElementById('playhead');
                 playhead.style.left = '0';
             }
-        }, 20); // Update every 20ms 
+        }, 20);
     }
 
     function fetchJob(job) {
@@ -286,7 +283,7 @@ window.onload = () => {
                             if (data.job.is_finished == true) {
                                 console.log("the result", data.result);
                                 loading.style.display = "none"
-                                this.setAttribute('disabled', false)
+                                generateBtn.setAttribute('disabled', false)
 
                                 clearInterval(checkJob)
 
@@ -322,7 +319,7 @@ window.onload = () => {
                             } 
                         } else {
                             loading.style.display = "none"
-                            this.setAttribute('disabled', false)
+                            generateBtn.setAttribute('disabled', false)
                             clearInterval(checkJob)
                             swal("Error!", "There was an error!!", "error")
                             console.log(data.error);
@@ -382,12 +379,14 @@ window.onload = () => {
             return console.error('There was a problem with the fetch operation:', error);
         }
     }
+    
     async function StartPlay(jsonPath = "", jsonData = "") {
         console.log("i confirm the click");
         var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
         var audioContext = new AudioContextFunc();
-        currentAudioCtxt = audioContext // for the stop funtion
-        await loadAndMakeAudioNodes(audioContext);
+        currentAudioCtxt = audioContext 
+
+        loadAndMakeAudioNodes(audioContext);
 
         if (jsonData != "") {
             if (typeof (jsonData) == "string") {
@@ -397,7 +396,6 @@ window.onload = () => {
             // createTimeline(jsonData);
             playPiece(jsonData, audioContext);
         }
-
     }
 
     async function playPiece(Notes, audioContext) {

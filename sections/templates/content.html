@@ -173,23 +173,23 @@
 
 <section id="section-container">
 
-<div class="section-contents">
-    <div class="links"><a href="{% url 'sections:section' getContent.category.section.id %}">{{ getContent.category.section.title }}</a> > <a href="#">{{getContent.category.title}}</a> > <a href="{% url 'sections:content' getContent.category.section.id getContent.category.title getContent.category.id getContent.id %}">{{getContent.title}}</a> </div>
-    <hr>
-    <div class="contents">
-            <div>{{ getContent.text|safe }}</div>
-    </div>
+    <div class="section-contents">
+        <div class="links"><a href="{% url 'sections:section' getContent.category.section.id %}">{{ getContent.category.section.title }}</a> > <a href="#">{{getContent.category.title}}</a> > <a href="{% url 'sections:content' getContent.category.section.id getContent.category.title getContent.category.id getContent.id %}">{{getContent.title}}</a> </div>
+        <hr>
+        <div class="contents">
+                <div>{{ getContent.text|safe }}</div>
+        </div>
 
-</div>
-<div class="sections-menu">
-    {% for content in getAllContents %}
-    <!--   content.category.section.id  -->
-    <a href="{% url 'sections:content' section_id category_name category_id content.id %}">
-        <span class="sections-menu-elements {% if getContent.id == content.id %} active {% endif %}">{{ content.title }} - {{ content.contentType }}</span>
-    </a>
-    
-    {% endfor %}
-</div>
+    </div>
+    <div class="sections-menu">
+        {% for content in getAllContents %}
+        <!--   content.category.section.id  -->
+        <a href="{% url 'sections:content' section_id category_name category_id content.id %}">
+            <span class="sections-menu-elements {% if getContent.id == content.id %} active {% endif %}">{{ content.title }} - {{ content.contentType }}</span>
+        </a>
+        
+        {% endfor %}
+    </div>
 </section>
 {% endblock %}
 
@@ -199,10 +199,10 @@
 let images = document.querySelectorAll('.contents img')
 for (let i = 0; i < images.length; i++){
     let scaller = 1
-    if (images[i].offsetWidth > 1000) {
+    if (images[i].offsetWidth >= 900) {
         scaller = 3
     }
-    if (images[i].offsetWidth > 2000) {
+    if (images[i].offsetWidth > 1800) {
         scaller = 6
     }
     

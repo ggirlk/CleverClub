@@ -29,7 +29,6 @@ def generate_tones(args):
     print("Generating ...")
     try:
         musicmodel = GeneratedMusic()
-        # fix prompt instruments remove spaces, fix their list and fix feel list
 
         musicmodel.title = args['title']
         musicmodel.style = args['style']
@@ -43,7 +42,7 @@ def generate_tones(args):
 
         gem = GenerateAnything()
         prompt = gem.getPrompt(musicmodel, "Music", args['instruments'], args['drums'])
-        print(prompt)
+        #print(prompt)
         jsonContents = gem.callgemini(prompt)
 
         print(jsonContents)
