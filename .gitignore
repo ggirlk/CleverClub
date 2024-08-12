@@ -4,4 +4,3 @@
 */migrations/
 db.sqlite3
 *.sql
-*.gz
